@@ -1,0 +1,2 @@
+1.手动新建数据库 attendance_system
+2. 添加管理员模块， 在文件系统里面允许 manager.py createsuperuser
