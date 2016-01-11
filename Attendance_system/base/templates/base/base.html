@@ -1,0 +1,39 @@
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Attendance System</title>
+    {% load  staticfiles %}
+    <link href="{% static 'css/style.css'%}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{% static 'js/jquery.min_2.1.4.js'%}"></script>
+    </head>
+    <body>
+     <!--This is the START of the header-->
+<div id="header-wrapper">
+	<div id="header">
+		<div id="logo"> <a href=""><img src="{% static 'images/logo.jpg'%}" width="100" height="80" alt="logo" /></a> </div>
+		<div id="header-text">
+			<h4>Welcome to the best system...</h4>
+			<h6><a href="i">Home</a></h6>
+		</div>
+	</div>
+</div>
+<!--END of header-->
+<!--This is the START of the menu-->
+
+
+<!-- content  -->
+     <div id=content>
+     {% block content %}
+     {% endblock %}
+     </div>
+ <!-- end content --> 
+ 
+ 
+ <!-- footer -->
+     <div id="footer">
+		<h6>Copyright © 2016 - fky</h6>
+	</div>
+     
+ <!-- end footer -->
+    </body>
+</html>

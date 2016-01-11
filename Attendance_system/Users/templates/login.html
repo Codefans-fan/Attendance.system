@@ -1,14 +1,12 @@
+{% extends 'base/base.html' %}
 {% load  staticfiles %}
-<html>
-<head>
-	<title> Loing</title>
-	
-	<script src="{% static 'js/jquery.min_2.1.4.js' %}"></script>
-</head>
-<body>
-  hello world
-  <img src="{% static 'images/test.png' %}" alt=""/>
+
+
+ {% block content %}
+ hello world
+  <img src="{% static 'images/test.png' %}" />
   
-  <img src="{% static 'images/test1.png' %}" alt=""/>
-</body>
-</html>
+  
+  
+  
+{% endblock %}
