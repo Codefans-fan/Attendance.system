@@ -1,7 +1,6 @@
-				
-/******************************************************************
-This is the CSS Reset
-******************************************************************/
+/*====================*/
+/*=== Reset Styles ===*/
+/*====================*/
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
 	margin: 0;
 	padding: 0;
@@ -10,273 +9,48 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	font: inherit;
 	vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-	display: block;
-}
 body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after, q:before, q:after {
-	content: '';
-	content: none;
+	line-height:1;
+	color:black;
+	background:white;
 }
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+	border-collapse:separate;
+	border-spacing:0;
 }
-/******************************************************************
-TEXT SELECTION STYLES
-******************************************************************/
-/* Safari, Chrome, iPhones, iPads */
-::selection {
- background:#E095B4;
- color:#fff;
+caption, th, td {
+	text-align:left;
+	font-weight:normal;
 }
-::-moz-selection {
- background:#E095B4;
- color:#fff;
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content:"";
 }
-::-webkit-selection {
- background:#E095B4;
- color:#fff;
+blockquote, q {
+	quotes:"" "";
 }
-a {
-	color: #E095B4;
-	outline: none;
+/* HTML5 tags */
+header, section, footer,
+aside, nav, article, figure {
+	display: block;
 }
-/******************************************************************
-General CSS
-******************************************************************/
-									
-#content {
-	width: 720px;
-	padding-top: 170px;
-	margin-left: 240px;
-	z-index: 1;
-}
-p {
-	font-family: Verdana, Arial, sans-serif;
-	line-height: 1.6em;
-	color: #848484;
-	font-size: 8pt;
-}
-h1 {
-	font-family: 'Droid Serif', Verdana, Arial, sans-serif;
-	line-height: 1.6em;
-	color: #454544;
-	text-decoration: none;
-	font-size: 22pt;
-}
-h2 {
-	font-family: 'Droid Serif', Verdana, Arial, sans-serif;
-	line-height: 1.6em;
-	color: #454544;
-	text-decoration: none;
-	font-size: 18pt;
-}
-h3 {
-	font-family: 'Droid Serif', Verdana, Arial, sans-serif;
-	line-height: 1.6em;
-	color: #454544;
-	text-decoration: none;
-	font-size: 16pt;
-}
-h4 {
-	font-family: 'Droid Serif', Verdana, Arial, sans-serif;
-	line-height: 1.6em;
-	color: #454544;
-	text-decoration: none;
-	font-size: 14pt;
-}
-h5 {
-	font-family: 'Droid Serif', Verdana, Arial, sans-serif;
-	line-height: 1.6em;
-	color: #454544;
-	text-decoration: none;
-	font-size: 12pt;
-}
-h6 {
-	font-family: 'Droid Serif', Verdana, Arial, sans-serif;
-	line-height: 1.6em;
-	color: #454544;
-	text-decoration: none;
-	font-size: 10pt;
-}
-/***************************************************
-COLUMNS and FEATURES
-***************************************************/
 
-.one, .one-half, .two-third, .one-third, .one-fourth {
-	float: left;
-}
-.one-half, .two-third, .one-third, .one-fourth {
-	margin-right: 25px;
-}
-.one {
-	width: 720px;
-}
-.one-half {
-	width: 340px;
-}
-.two-third {
-	width: 460px;
-}
-.one-third {
-	width: 220px;
-}
-.one-fourth {
-	width: 160px;
-}
-.one-half-last {
-	width: 350px;
-	float: right;
-}
-.two-third-last {
-	width: 460px;
-	float: right;
-}
-.one-third-last {
-	width: 220px;
-	float: right;
-}
-.one-fourth-last {
-	width: 160px;
-	float: right;
-}
-.clear {
-	clear: both;
-}
-.dropcap {
-	font-family: Verdana, Arial, sans-serif;
-	font-size: 36px;
-	color: #333;
-	width:32px;
-	height:30px;
-	float:left;
-	padding:5px 5px 5px 5px;
-	text-align:center;
-	margin:5px 5px 5px 5px;
-}
-blockquote {
-	font-style:italic;
-	font-size:20px;
-	margin-right:20px;
-	padding-left:20px;
-	margin-left:20px;
-	margin-top: 60px;
-	margin-bottom: 60px;
-	font-family: 'Droid Serif', Verdana, Arial, sans-serif;
+body {
+	font:14px/1.6 Georgia, Palatino, Palatino Linotype, Times, Times New Roman, serif;
 	color:#333;
-	text-align: center;
-	background-image: url(../images/blockquote.png);
-	background-repeat: no-repeat;
-	background-position: left top;
+	background:#eee;
 }
-.styled-list-check li {
-	font-family: Verdana, Arial, sans-serif;
-	line-height: 1.6em;
-	color: #666;
-	text-decoration: none;
-	font-size: 14px;
-	background-image: url(../images/check.png);
-	background-position: left center;
-	background-repeat: no-repeat;
-	padding-left: 16px;
+
+a, a:visited {
+	color:blue;
+	text-decoration:none;
 }
-.styled-list-check {
-	padding-bottom: 60px;
+a:hover, a:active {
+	color:#000;
+	text-decoration:none;
 }
-.styled-list-dot li {
-	font-family: 'Droid Sans', Verdana, Arial, sans-serif;
-	line-height: 1.6em;
-	text-decoration: none;
-	font-size: 14px;
-	color: #666;
-	background-image: url(../images/dot.png);
-	background-position: left center;
-	background-repeat: no-repeat;
-	padding-left: 20px;
-	padding-top: 2px;
-}
-.styled-list-dot {
-	padding-bottom: 60px;
-}
-.styled-list-star li {
-	font-family: 'Droid Sans', Verdana, Arial, sans-serif;
-	line-height: 1.6em;
-	text-decoration: none;
-	font-size: 14px;
-	color: #666;
-	background-image: url(../images/star.png);
-	background-position: left center;
-	background-repeat: no-repeat;
-	padding-left: 20px;
-	padding-top: 2px;
-}
-.styled-list-star {
-	padding-bottom: 60px;
-}
-.readmore {
-	font-family: 'Droid Sans', Verdana, Arial, sans-serif;
-	font-size: 11px;
-	text-decoration: none;
-	color: #E095B4;
-	float: right;
-	margin-right: 0px;
-	margin-top: 0px;
-}
-a:hover {
-	color: #E35A88;
-}
-.spacer {
-	height: 1px;
-	clear: both;
-	border-bottom: 1px;
-	border-style: solid;
-	border-color: #d6d6d6;
-	margin: 20px 5px 20px 5px;
-}
-.blank-spacer {
-	width: 720px;
-	height: 1px;
-	clear: both;
-	margin: 10px 5px 10px 5px;
-	padding: 10px 5px 10px 5px;
-}
-.star-divider {
-	background-image:url(../images/star_divider.png);
-	text-align: center;
-	display: block;
-	clear: both;
-	height: 16px;
-	width: 430px;
-	margin-top: 10px;
-	margin-right: auto;
-	margin-bottom: 10px;
-	margin-left: auto;
-	background-repeat: no-repeat;
-}
-#error {
-	display: block;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 300px;
-}
-#sucess {
-	display: block;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 300px;
-}
+
+
 /******************************************************************
 Header & Menu CSS
 ******************************************************************/
@@ -316,16 +90,17 @@ Header & Menu CSS
 	text-decoration: none;
 	font-size: 7pt;
 }
-#social-box {
-	width: 96px;
-	height: 22px;
-	position: fixed;
-	bottom: 40px;
-	left: 30px;
-}
 #footer h6 {
 	font-size: 10px;
 	position: fixed;
 	bottom: 10px;
 	left: 20px;
+}
+
+
+/*====================*/
+/*=== Other Styles ===*/
+/*====================*/
+.clear {
+	clear:both;
 }
