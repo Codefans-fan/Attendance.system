@@ -19,3 +19,14 @@ class User(models.Model):
         list_display = ('name', 'display_name', 'email')
         list_filter = ('name', )
         ordering = ('-create_date',)
+        
+
+
+class Role(models.Model):        
+    roleID = models.IntegerField(max_length=32)
+    roleName = models.CharField(max_length=64)
+    
+    
+class UserRole(models.Model):
+    userID = models.ManyToOneRel(User)
+    roleID = models.ManyToOneRel(Role)
