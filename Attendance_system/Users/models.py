@@ -12,6 +12,7 @@ class User(models.Model):
     password = models.CharField(max_length = 64)
     email = models.EmailField()
     create_date = models.DateField(blank=True,default=django.utils.timezone.now)
+    last_login = models.DateField(blank=True,default=django.utils.timezone.now)
     def __str__(self):
         return self.name
     
@@ -19,3 +20,12 @@ class User(models.Model):
         list_display = ('name', 'display_name', 'email')
         list_filter = ('name', )
         ordering = ('-create_date',)
+        
+class Role(models.Model):
+    roleKey = models.IntegerField()
+    roleName = models.CharField(max_length=64)
+    
+    
+class UserRole(models.Model):
+    userId = models.ForeignKey(User,on_delete=models.CASCADE)
+    roleId = models.ForeignKey(Role,on_delete=models.CASCADE)

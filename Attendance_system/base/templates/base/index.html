@@ -11,8 +11,13 @@
 	width: 80%; 
 	margin: 100px auto;
 }
-
 </style>
+
+<div>
+   {{ userInfo.UserID }}
+   {{ userInfo.UserName}}
+</div>
+
 
 <!--This is the START of the NIVO slider-->
  <div id="portfolio" style="padding-top:5px;">
@@ -28,7 +33,6 @@
             </div>
         </div>
 </div>
-
     <script type="text/javascript" src="{% static 'js/jquery.nivo.slider.js'%}"></script>
     <script type="text/javascript">
     $(window).load(function() {

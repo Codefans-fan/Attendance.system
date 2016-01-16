@@ -20,8 +20,11 @@ from base.views import *
 from Users.views import login
 urlpatterns = [
     url(r'^$', index),
-    url(r'base', base),
     url(r'^admin/', admin.site.urls),
-    url(r'user/login', login),
+    # User:
+    url(r'^user/login/$', login),
    
+
+    #end user
+
 ]
