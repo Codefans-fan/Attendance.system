@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Users',
     'base',
+    'Attend',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -80,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'attendance_system',
         'USER': 'postgres',
-        'PASSWORD': 'dsa',
+        'PASSWORD': 'fky',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
