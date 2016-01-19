@@ -25,7 +25,18 @@ class Role(models.Model):
     roleKey = models.IntegerField()
     roleName = models.CharField(max_length=64)
     
+    def __str__(self):
+        return self.roleName
+    
+    class Admin(admin.ModelAdmin):
+        list_display = ('roleKey', 'roleName')
     
 class UserRole(models.Model):
     userId = models.ForeignKey(User,on_delete=models.CASCADE)
     roleId = models.ForeignKey(Role,on_delete=models.CASCADE)
+    
+    class Admin(admin.ModelAdmin):
+        list_display = ('userId', 'roleId')
+    
+    
+    
