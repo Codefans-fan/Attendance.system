@@ -1,0 +1,45 @@
+.div_login_form {
+	position: relative;
+	margin-top: 200px;
+	height:28em;
+}
+.Cone {
+	color: #adadad;
+	position: absolute;
+	margin-left: 40.4%;
+	margin-top: 1.6%;
+	height: 50px;
+	font-size: 1.35em;
+}
+
+input {
+	width: 20%;
+	height: 3em;
+	margin-left: 40%;
+	opacity: 1;
+	outline-style: none;
+	border-image-source: initial;
+	border-image-slice: initial;
+	border-image-width: initial;
+	border-image-outset: initial;
+	border-image-repeat: initial;
+	font-size: 1em;
+	color: rgb(189, 192, 184);
+	font-family: 微软雅黑;
+	padding-left: 40px;
+	margin-top: 1%;
+	border-radius: 5px;
+	border: 1px solid rgba(239, 239, 239, 0.14902);
+}
+
+#submit {
+	width: 20%;
+	height: 3em;
+	background-color: rgba(88, 133, 159, 0.960784);
+	padding-left: 8%;
+	text-align: left;
+	font-weight: bolder;
+	font-family: 微软雅黑;
+	opacity: 1;
+	margin-left: 40%;
+}
