@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'attendance_system',
         'USER': 'postgres',
-        'PASSWORD': 'fky',
+        'PASSWORD': 'dsa',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
