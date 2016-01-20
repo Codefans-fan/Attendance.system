@@ -18,6 +18,7 @@ from django.contrib import admin
 
 from base.views import *
 from Users.views import login
+from Attend.views import index as attend_index
 urlpatterns = [
     url(r'^$', index),
     #admin    
@@ -28,7 +29,6 @@ urlpatterns = [
     # User:
     url(r'^user/login/$', login),
     
-
-    #end user
-
+    #Attend
+    url(r'^attend/',attend_index)
 ]

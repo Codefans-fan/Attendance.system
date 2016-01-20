@@ -36,9 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Users',
-    'base',
-    'Attend',
+    'Users.apps.UsersConfig',
+    'base.apps.BaseConfig',
+    'Attend.apps.AttendConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'Attendance_system.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "base/templates"),os.path.join(BASE_DIR, "Users/templates")],
+        'DIRS': [os.path.join(BASE_DIR, "base/templates"),os.path.join(BASE_DIR, "Users/templates"),os.path.join(BASE_DIR, "Attend/templates"),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,7 +127,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
 
