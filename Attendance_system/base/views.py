@@ -9,3 +9,6 @@ def index(req):
 
 def base(req):
     return render(req,'base/base.html')
+
+def menutest(req):
+    return render(req, 'base/leftTest.html')
