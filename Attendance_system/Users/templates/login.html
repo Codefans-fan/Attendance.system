@@ -5,12 +5,17 @@
  <div class="div_login_form">
  <form action=""  method="post">
    {% csrf_token %}
+   
   <i class="fa fa-user Cone">  | </i>
- <input type="text" name="username" id="username" placeholder="User Name">
+   {{ form.username}}
   <br>
  <i class="fa fa-key Cone">  | </i>
- <input type="password" name="password" id="password" placeholder="Password">
+  {{ form.password }}
  <br>
+ <div style="text-align: center; color: red;
+ ">
+  {{errors}}
+ </div>
  <input type="submit" value="Sign in" id="submit" name="submit">
  <br>
 </form>

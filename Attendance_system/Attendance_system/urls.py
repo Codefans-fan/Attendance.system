@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^test', menutest),
    
     # User:
-    url(r'^user/login/$', login),
+    url(r'^user/login/$', login, name='login'),
     
     #Attend
     url(r'^attend/',attend_index)

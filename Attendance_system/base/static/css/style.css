@@ -77,11 +77,12 @@ Header & Menu CSS
 	display: block;
 	height: 20px;
 }
-#header-text h6 {
+#header-text h5 {
 	font-size: 7pt;
 	color: #d8d8d8;
 }
 #header-text a {
+	margin-left: 10px;
 	font-family: 'Droid Serif', Verdana, Arial, sans-serif;
 	color: #d8d8d8;
 	text-decoration: none;

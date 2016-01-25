@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib import admin
 
+from django.contrib.auth.models import User
 # Create your models here.
-from Users.models import User
 
 class Attend(models.Model):
     userId = models.ForeignKey(User,on_delete=models.CASCADE)

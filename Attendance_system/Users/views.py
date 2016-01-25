@@ -1,24 +1,42 @@
+from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login as user_login, logout as user_logout  
+from django.template.response import TemplateResponse
+import time
 
 
-from models import User
+from django.contrib.auth import REDIRECT_FIELD_NAME
 
 # Create your views here.
 def login(req):
     if req.method == 'POST':
-        userName =  req.POST.get('username','')
-        passwd = req.POST.get('password','')
-        user = User.objects.filter(name=userName, password = passwd)
-        if user:
+        form = AuthenticationForm(req, data=req.POST)
+        if form.is_valid():
             # login success
-            userInfo = {'UserID': user[0].id,
-                        'UserName':user[0].name,}
-            
-            req.session['userInfo'] = userInfo
+            user_login(req, form.get_user())
             return HttpResponseRedirect('/')
-        else:
-            return  HttpResponseRedirect('/user/login', {})
     else:
-      
-        return render(req, 'login.html', {})
+        form = AuthenticationForm(req)
+    context = {
+        'form':form,
+        'errors':form.errors.get('__all__','')
+        }
+    return render(req, 'login.html', context)
+
+def redirect_to_login(next, login_url=None,
+                      redirect_field_name=REDIRECT_FIELD_NAME):
+    """
+    Redirects the user to the login page, passing the given 'next' page
+    """
+    resolved_url = resolve_url(login_url or settings.LOGIN_URL)
+
+    login_url_parts = list(urlparse(resolved_url))
+    if redirect_field_name:
+        querystring = QueryDict(login_url_parts[4], mutable=True)
+        querystring[redirect_field_name] = next
+        login_url_parts[4] = querystring.urlencode(safe='/')
+
+    return HttpResponseRedirect(urlunparse(login_url_parts))
