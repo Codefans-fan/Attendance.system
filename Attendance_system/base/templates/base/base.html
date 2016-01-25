@@ -20,6 +20,14 @@
 			</h5>
 		</div>
 	</div>
+	<div id="user_heder_info">
+	  {% if user.is_authenticated %}
+	      <a href="#">{{ user }}</a>
+		  <a href="/user/logout">Logout</a>
+	  {% else %}
+		   <a href="/user/login">Login</a>
+      {% endif %}
+		</div>
 </div>
 <!--END of header-->
 <!--This is the START of the menu-->

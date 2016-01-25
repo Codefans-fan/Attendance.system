@@ -4,7 +4,6 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as user_login, logout as user_logout  
-from django.template.response import TemplateResponse
 import time
 
 
@@ -40,3 +39,7 @@ def redirect_to_login(next, login_url=None,
         login_url_parts[4] = querystring.urlencode(safe='/')
 
     return HttpResponseRedirect(urlunparse(login_url_parts))
+
+def logout(req):
+    user_logout(req)
+    return HttpResponseRedirect('/')

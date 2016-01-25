@@ -18,7 +18,10 @@ from django.contrib import admin
 
 from base.views import *
 from Users.views import login
+from Users.views import logout
+
 from Attend.views import index as attend_index
+from Attend.views import show_my_attendance
 urlpatterns = [
     url(r'^$', index),
     #admin    
@@ -27,8 +30,11 @@ urlpatterns = [
     url(r'^test', menutest),
    
     # User:
-    url(r'^user/login/$', login, name='login'),
+    url(r'^user/login/*$', login, name='login'),
+    url(r'^user/logout/$', logout, name='logout'),
     
     #Attend
-    url(r'^attend/',attend_index)
+    url(r'^attend/$',attend_index),
+    url(r'^attend/id=([0-9]+)',show_my_attendance),
+    url(r'^attend/id=(all)',show_my_attendance),
 ]

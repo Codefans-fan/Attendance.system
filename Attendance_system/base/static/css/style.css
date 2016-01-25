@@ -88,6 +88,18 @@ Header & Menu CSS
 	text-decoration: none;
 	font-size: 7pt;
 }
+
+
+#user_heder_info{
+	margin-left:90%;
+	margin-top:-50px;
+	
+}
+#user_heder_info a{
+	margin:0px 5px;
+	float:left;
+	text-decoration: underline;	
+}
 #footer h6 {
 	font-size: 10px;
 	position: fixed;

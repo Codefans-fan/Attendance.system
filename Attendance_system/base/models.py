@@ -23,3 +23,8 @@ class Menu():
     
     def get_subMenus(self):
         return self.subMenus
+    
+class BaseManu():
+    def __init__(self,displayName,url):
+        self.display = displayName
+        self.url = url
