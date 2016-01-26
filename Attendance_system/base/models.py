@@ -13,8 +13,6 @@ class Menu():
         self.topName = topName
         
         self.subMenus = []
-        
-    
     def addMenu(self, title, url):
         self.subMenus.append((title,url))
         
