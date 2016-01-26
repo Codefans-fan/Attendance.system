@@ -13,3 +13,8 @@ class Attend(models.Model):
     
     class Admin(admin.ModelAdmin):
         list_display = ('userId', 'lock_time', 'commet')
+        
+    class Meta:
+        permissions = (
+            ("readall", "Can see all attendance"),
+        )

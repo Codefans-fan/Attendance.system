@@ -1,0 +1,48 @@
+{% extends 'base/basewithleftmenu.html' %}
+{% load  staticfiles %}
+
+{% block content %}
+<link href="{% static 'css/fullcalendar.css'%}" rel='stylesheet' />
+<link href="{% static 'css/fullcalendar.print.css'%}" rel='stylesheet' media='print' />
+<script src="{% static 'js/moment.min.js' %}"></script>
+<script src="{% static 'js/fullcalendar.min.js' %}"></script>
+<div id="calendarpage">
+   <div id="calendar">
+   </div>
+</div>
+
+
+<style type="text/css">
+#calendar {
+        background-color:white;
+		max-width: 900px;
+		margin: 0 160px;
+		padding:5px 10px;
+	}
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#calendar').fullCalendar({
+		header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'month,basicWeek,agendaDay'
+		},
+		defaultDate: '2016-01-01',
+		editable: true,
+		eventLimit: true, // allow "more" link when too many events
+		events: [
+			{
+				title: 'Meeting',
+				start: '2016-01-12T10:30:00',
+				end: '2016-01-12T12:30:00'
+			}
+		],
+	});
+	
+});
+
+</script>
+
+
+{% endblock %}

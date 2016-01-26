@@ -40,15 +40,28 @@ def show_my_attendance(req, userid = None):
     
     return render(req, "Attend/index.html",context=context)
 
+@login_required(login_url="/user/login")
+def show_canlendar(req, type=None, userid=None):
+    menu = __createMenu(req.user)
+    context = {
+        'menu':menu,
+        }
+    return render(req,"Attend/calendarpage.html",context=context)
+
 def __createMenu(user):
     menu_1 = Menu('Attend')
     menu_1.addMenu('My attendance','id='+str(user.id))
-    menu_1.addMenu('All','id=all')
+    menu_1.addMenu('Calendar','type=1&id='+str(user.id))
     
-    
+    if user.has_perm("Attend.readall"):
+        menu_1.addMenu('All','id=all')
     
     return (menu_1,)
     
 def __createMainMenu():
     mainMenu = BaseManu('Attend','/attend')
     return mainMenu
+
+
+
+
