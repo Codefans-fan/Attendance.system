@@ -21,7 +21,7 @@ from Users.views import login
 from Users.views import logout
 
 from Attend.views import index as attend_index
-from Attend.views import show_my_attendance
+from Attend.views import show_table_list
 from Attend.views import show_canlendar
 urlpatterns = [
     url(r'^$', index),
@@ -36,7 +36,7 @@ urlpatterns = [
     
     #Attend
     url(r'^attend/$',attend_index),
-    url(r'^attend/id=([0-9]+)',show_my_attendance),
-    url(r'^attend/id=(all)',show_my_attendance),
+    url(r'^attend/id=([0-9]+)',show_table_list),
+    url(r'^attend/id=(all)',show_table_list),
     url(r'^attend/type=([0-9])&id=([0-9]+)',show_canlendar),
 ]

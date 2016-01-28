@@ -1,0 +1,56 @@
+{% load  staticfiles %}
+<link rel="stylesheet" href="{% static 'css/theme.ice.css'%}">
+<link rel="stylesheet" href="{% static 'css/jquery.tablesorter.pager.css'%}">
+<script type="text/javascript" src="{% static 'js/jquery.min_2.1.4.js'%}"></script>
+<!-- load jQuery and tablesorter scripts -->
+<script type="text/javascript" src="{% static 'js/jquery.tablesorter.js'%}"></script>
+<!-- tablesorter widgets (optional) -->
+<script type="text/javascript" src="{% static 'js/jquery.tablesorter.widgets.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.tablesorter.pager.js'%}"></script>
+<div id="content_table">
+   <table id="myTable" class="tablesorter">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Sign in</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for line in lines %}
+    <tr>
+      <td>{{ line.userId }}</td>
+      <td>{{ line.lock_time|date:"Y-m-d H:i:s"  }}</td>
+      <td>{{ line.commet}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<!-- pager -->
+<div id="pager" class="pager" style="text-align:center;">
+  <form>
+    <img src="{% static 'images/icons/first.png'%}" class="first"/>
+    <img src="{% static 'images/icons/prev.png'%}" class="prev"/>
+    <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+    <img src="{% static 'images/icons/next.png'%}" class="next"/>
+    <img src="{% static 'images/icons/last.png'%}" class="last"/>
+    <select class="pagesize">
+      <option value="20">20</option>
+      <option value="30">30</option>
+      <option value="40">40</option>
+      <option value="all">All Rows</option>
+    </select>
+  </form>
+</div>
+<script type="text/javascript">
+$(function(){
+	  $("#myTable").tablesorter({
+		  theme:"ice",
+		  cancelSelection:false,
+	  }).tablesorterPager({
+		 container: $(".pager"),
+		 size: 20,
+	  });
+	});
+
+</script>

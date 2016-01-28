@@ -6,23 +6,19 @@ from models import Attend
 
 from base.models import Menu
 from base.models import BaseManu
+from base.models import CJsonEncoder
+
+import json
 
 @login_required(login_url="/user/login")
 def index(req):
-    attends =  Attend.objects.filter(userId=req.user.id)
     menu = __createMenu(req.user)
-    basemenu = []
-    basemenu.append(__createMainMenu())
     context = {
-        'basemenu':basemenu,
         'menu':menu,
-        'lines':attends
         }
-    
     return render(req, "Attend/index.html",context=context)
-
 @login_required(login_url="/user/login")
-def show_my_attendance(req, userid = None):
+def show_table_list(req,userid = None):
     if userid is None:
         attends = []
     elif userid == 'all':
@@ -37,8 +33,7 @@ def show_my_attendance(req, userid = None):
         'menu':menu,
         'lines':attends
         }
-    
-    return render(req, "Attend/index.html",context=context)
+    return render(req, "Attend/tablelist.html",context=context)
 
 @login_required(login_url="/user/login")
 def show_canlendar(req, type=None, userid=None):
@@ -50,11 +45,11 @@ def show_canlendar(req, type=None, userid=None):
 
 def __createMenu(user):
     menu_1 = Menu('Attend')
-    menu_1.addMenu('My attendance','id='+str(user.id))
-    menu_1.addMenu('Calendar','type=1&id='+str(user.id))
+    menu_1.addMenu('My attendance','attend_show_table_list('+str(user.id)+')')
+    menu_1.addMenu('Calendar','attend_show_calendar('+str(user.id)+")")
     
     if user.has_perm("Attend.readall"):
-        menu_1.addMenu('All','id=all')
+        menu_1.addMenu('All',"attend_show_table_list('all')")
     
     return (menu_1,)
     

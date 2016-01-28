@@ -18,7 +18,7 @@
 		<dl>
 			<dt>{{ item.topName }}<img src="{% static 'images/select_xl01.png'%}" style="margin-left:5px;"></dt>
 			 {% for sub in item.subMenus %}
-			 <dd ><a href="{{ sub.1 }}"> {{ sub.0 }} </a></dd>
+			 <dd ><a href="javascript:{{ sub.1 }};"> {{ sub.0 }} </a></dd>
 			 {% endfor %}
 		</dl>
 	 {% endfor %}
