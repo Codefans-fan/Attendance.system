@@ -31,12 +31,14 @@ $(document).ready(function() {
 		editable: true,
 		eventLimit: true, // allow "more" link when too many events
 		events: [
+		    {% for item in lines %}
 			{
-				title: 'Meeting',
-				start: '2016-01-12T10:30:00',
-				end: '2016-01-12T12:30:00'
-			}
+				title: "{{ item.comment}}",
+				start: "{{ item.lock_time|date:'Y-m-d H:i:s' }}",
+			}{% if not forloop.last %} , {% endif %}
+			{% endfor %}
 		],
+		timeFormat: 'H:mm',
 	});
 	
 });

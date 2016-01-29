@@ -7,13 +7,13 @@ from django.contrib.auth.models import User
 class Attend(models.Model):
     userId = models.ForeignKey(User,on_delete=models.CASCADE)
     lock_time = models.DateTimeField()
-    commet = models.CharField(max_length = 64)
+    comment = models.CharField(max_length = 64)
     
     def __unicode__(self):
         return str(self.userId)
     
     class Admin(admin.ModelAdmin):
-        list_display = ('userId', 'lock_time', 'commet')
+        list_display = ('userId', 'lock_time', 'comment')
         
     class Meta:
         permissions = (

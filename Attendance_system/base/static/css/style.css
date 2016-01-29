@@ -89,7 +89,7 @@ Header & Menu CSS
 #form_header{
 	position: fixed;
 	top:100px;
-	width:100%;
+	width:88%;
 	height:30px;
 	margin-left:160px;
 	z-index: 5000;
@@ -105,6 +105,15 @@ Header & Menu CSS
 	
 	
 }
+#form_header .attend_view_manager_switch{
+	float: right;
+	margin-right:12px;
+}
+#form_header .attend_e{
+	margin:10px 10px;
+	float: left;
+}
+
 
 #user_heder_info{
 	margin-left:90%;
