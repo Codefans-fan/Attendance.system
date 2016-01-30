@@ -89,9 +89,9 @@ Header & Menu CSS
 #form_header{
 	position: fixed;
 	top:100px;
-	width:88%;
+	width:90%;
 	height:30px;
-	margin-left:160px;
+	margin-left:10%;
 	z-index: 5000;
   border-bottom: 1px solid #cacaca;
   padding-left: 2px;

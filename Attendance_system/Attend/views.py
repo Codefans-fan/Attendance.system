@@ -23,7 +23,7 @@ def show_table_list(req,userid = None):
     elif userid == 'all':
         attends =  Attend.objects.filter()
     else:
-        attends =  Attend.objects.filter(userId=userid)
+        attends =  Attend.objects.filter(userId=userid).order_by('lock_time')
     menu = __createMenu(req.user)
     basemenu = []
     basemenu.append(__createMainMenu())
@@ -47,14 +47,19 @@ def show_canlendar(req, type=None, userid=None):
     if userid is None:
         attends = []
     else:
-        attends =  Attend.objects.filter(userId=userid,lock_time__gte = date_start, lock_time__lt=date_end)
-    
-    
+        attends =  Attend.objects.filter(userId=userid, lock_time__gte = date_start, lock_time__lt=date_end).order_by('lock_time')
+    __filter_day_record(attends)
     context = {
         'menu':menu,
         'lines':attends,
         }
     return render(req,"Attend/calendarpage.html",context=context)
+
+def __filter_day_record(records):
+    print min(records, key=lambda p: p.lock_time).lock_time
+        
+
+
 
 def __createMenu(user):
     menu_1 = Menu('Attend')
