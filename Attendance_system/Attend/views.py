@@ -6,8 +6,11 @@ from models import Attend
 
 from base.models import Menu
 from base.models import BaseManu
+
+import itertools
 import json
 from datetime import datetime
+from pip._vendor.distlib._backport.tarfile import grp
 
 @login_required(login_url="/user/login")
 def index(req):
@@ -48,15 +51,23 @@ def show_canlendar(req, type=None, userid=None):
         attends = []
     else:
         attends =  Attend.objects.filter(userId=userid, lock_time__gte = date_start, lock_time__lt=date_end).order_by('lock_time')
-    __filter_day_record(attends)
     context = {
         'menu':menu,
-        'lines':attends,
+        'lines':__filter_day_record(attends),
         }
     return render(req,"Attend/calendarpage.html",context=context)
 
 def __filter_day_record(records):
-    print min(records, key=lambda p: p.lock_time).lock_time
+    if records:
+        res = []
+        days_group =[list(group) for k, group in itertools.groupby(records,key=lambda args: args.lock_time.day)]
+        for grp in days_group:
+            grp.sort(key=lambda p: p.lock_time)
+            res.append(grp[0])
+            res.append(grp[-1])
+        return res
+    return None
+    
         
 
 
