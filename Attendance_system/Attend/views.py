@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.core import serializers
 # Create your views here.
 
 from models import Attend
@@ -10,7 +12,6 @@ from base.models import BaseManu
 import itertools
 import json
 from datetime import datetime
-from pip._vendor.distlib._backport.tarfile import grp
 
 @login_required(login_url="/user/login")
 def index(req):
@@ -39,18 +40,14 @@ def show_table_list(req,userid = None):
 
 @login_required(login_url="/user/login")
 def show_canlendar(req, type=None, userid=None):
+    start = req.GET.get('start')
+    end = req.GET.get('end')
     menu = __createMenu(req.user)
-    
-    current = datetime.now()
-    
-    date_start = datetime(current.year,current.month,1)
-    date_end = datetime(current.year,current.month+1,1)
-   
-    
-    if userid is None:
-        attends = []
-    else:
-        attends =  Attend.objects.filter(userId=userid, lock_time__gte = date_start, lock_time__lt=date_end).order_by('lock_time')
+    attends = []
+    if userid and  start and end:
+        attends =  Attend.objects.filter(userId=userid, lock_time__gte = start, lock_time__lt=end).order_by('lock_time')
+        return  HttpResponse(serializers.serialize('json', __filter_day_record(attends)), content_type="application/json")   
+        
     context = {
         'menu':menu,
         'lines':__filter_day_record(attends),
@@ -66,11 +63,8 @@ def __filter_day_record(records):
             res.append(grp[0])
             res.append(grp[-1])
         return res
-    return None
+    return []
     
-        
-
-
 
 def __createMenu(user):
     menu_1 = Menu('Attend')
@@ -84,7 +78,4 @@ def __createMenu(user):
 def __createMainMenu():
     mainMenu = BaseManu('Attend','/attend')
     return mainMenu
-
-
-
 

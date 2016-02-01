@@ -27,7 +27,7 @@ $(document).ready(function() {
 			center: 'title',
 			right: 'month,basicWeek,agendaDay'
 		},
-		defaultDate: '2016-01-01',
+		defaultDate: new Date(),
 		editable: true,
 		eventLimit: true, // allow "more" link when too many events
 		events: [
@@ -39,8 +39,31 @@ $(document).ready(function() {
 			{% endfor %}
 		],
 		timeFormat: 'H:mm',
+		viewRender: function(view, element) {
+			if(view.name=="month"){
+		        $.ajax({
+		        	url:"",
+		        	dataType:"json",
+		        	async:true,
+		        	data:{"start":view.intervalStart.format(),"end":view.intervalEnd.format()},
+		        	type:"GET",
+		        	success:function(data){
+		        		var events = [];
+		        		$.each(data,function(i,item){
+		        		 	var event = {title:item.fields.comment,start:item.fields.lock_time};
+		        		 	events.push(event);
+		        		});
+		        		$('#calendar').fullCalendar('removeEvents');
+		        		$('#calendar').fullCalendar('addEventSource', events);
+		        	},
+		        })
+		        
+			}
+	    },
+		
 	});
 	
+		
 });
 
 </script>

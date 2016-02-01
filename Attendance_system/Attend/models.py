@@ -9,6 +9,9 @@ class Attend(models.Model):
     lock_time = models.DateTimeField()
     comment = models.CharField(max_length = 64)
     
+    def to_dict(self):
+        return {'uid':self.userId,'lock_time':self.lock_time,'comment':self.comment}
+    
     def __unicode__(self):
         return str(self.userId)
     

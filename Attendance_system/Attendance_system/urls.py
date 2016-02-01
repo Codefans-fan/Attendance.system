@@ -38,5 +38,6 @@ urlpatterns = [
     url(r'^attend/$',attend_index),
     url(r'^attend/id=([0-9]+)',show_table_list),
     url(r'^attend/id=(all)',show_table_list),
-    url(r'^attend/type=([0-9])&id=([0-9]+)',show_canlendar),
+    url(r'^attend/type=([0-9])&id=([0-9]+)$',show_canlendar),
+    #url(r'^attend/type=([0-9])&id=([0-9]+)&start=(\d{4}-\d{2}-\d{2})&end=(\d{4}-\d{2}-\d{2})',show_canlendar),
 ]
