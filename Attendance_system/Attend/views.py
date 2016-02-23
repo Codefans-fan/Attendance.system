@@ -18,6 +18,7 @@ def index(req):
     menu = __createMenu(req.user)
     context = {
         'menu':menu,
+        'userId':req.user.id
         }
     return render(req, "Attend/index.html",context=context)
 @login_required(login_url="/user/login")
