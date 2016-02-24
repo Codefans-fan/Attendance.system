@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.core import serializers
 # Create your views here.
 
 from models import Attend
+from django.contrib.auth.models import User
 
 from base.models import Menu
 from base.models import BaseManu
@@ -61,8 +63,11 @@ def __filter_day_record(records):
         days_group =[list(group) for k, group in itertools.groupby(records,key=lambda args: args.lock_time.day)]
         for grp in days_group:
             grp.sort(key=lambda p: p.lock_time)
-            res.append(grp[0])
-            res.append(grp[-1])
+            if len(grp) > 1:
+                res.append(grp[0])
+                res.append(grp[-1])
+            else:
+                res.append(grp[0])
         return res
     return []
     
@@ -79,4 +84,15 @@ def __createMenu(user):
 def __createMainMenu():
     mainMenu = BaseManu('Attend','/attend')
     return mainMenu
+
+
+def clean_attend_database(req):
+    users = User.objects.all()
+    for user in users:
+        attends =  Attend.objects.filter(userId=user.id).order_by('lock_time')
+        show_list = __filter_day_record(attends)
+        for item in attends:
+            if item not in show_list:
+                item.delete()
+    return HttpResponseRedirect("/")
 

@@ -23,6 +23,7 @@ from Users.views import logout
 from Attend.views import index as attend_index
 from Attend.views import show_table_list
 from Attend.views import show_canlendar
+from Attend.views import clean_attend_database
 urlpatterns = [
     url(r'^$', index),
     #admin    
@@ -39,5 +40,6 @@ urlpatterns = [
     url(r'^attend/id=([0-9]+)',show_table_list),
     url(r'^attend/id=(all)',show_table_list),
     url(r'^attend/type=([0-9])&id=([0-9]+)$',show_canlendar),
+    url(r'^attend/clean_attend_database',clean_attend_database),
     #url(r'^attend/type=([0-9])&id=([0-9]+)&start=(\d{4}-\d{2}-\d{2})&end=(\d{4}-\d{2}-\d{2})',show_canlendar),
 ]
