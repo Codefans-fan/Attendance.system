@@ -19,6 +19,7 @@ from django.contrib import admin
 from base.views import *
 from Users.views import login
 from Users.views import logout
+from Users.views import change_passwd
 
 from Attend.views import index as attend_index
 from Attend.views import show_table_list
@@ -32,8 +33,9 @@ urlpatterns = [
     url(r'^test', menutest),
    
     # User:
-    url(r'^user/login/*$', login, name='login'),
+    url(r'^user/login/*', login, name='login'),
     url(r'^user/logout/$', logout, name='logout'),
+    url(r'^user/changepw/$',change_passwd),
     
     #Attend
     url(r'^attend/$',attend_index),

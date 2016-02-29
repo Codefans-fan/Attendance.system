@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+{% load  staticfiles %}
+ {% block content %}
+ <link href="{% static 'css/users.css'%}" rel="stylesheet" type="text/css" />
+ <div class="div_change_form">
+ <form action=""  method="post">
+   {% csrf_token %}
+   <table>
+   <tr>
+      <td>Old password</td>
+      <td>{{ form.old_password}}</td>
+   </tr>
+   <tr>
+      <td>New Password </td>
+      <td>{{ form.new_password1 }}</td>
+   </tr>
+   <tr>
+   	  <td>Confirm Password</td>
+   	  <td> {{ form.new_password2}}</td>
+   </tr>
+   <tr>
+      <td colspan="2">
+      <div style="text-align: center; color: red;
+ ">
+  {{errors}}
+ </div>
+      </td>
+   </tr>
+   <tr>
+      <td></td>
+      <td ><input type="submit" value="Save" id="save" name="submit"></td>
+   </tr>
+ </table>
+</form>
+ 
+ </div>
+  
+{% endblock %}
