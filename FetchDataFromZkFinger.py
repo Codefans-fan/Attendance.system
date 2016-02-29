@@ -73,11 +73,19 @@ def addUsersToPostgres(userList):
     cur.close()
     conn.close()
 
-def addAttLogsToPostgres(logList):
+import datetime
+
+def addAttLogsToPostgres(logList,isToday=None):
     conn = psycopg2.connect(database="attendance_system", user="odoo", password="odoo", host="172.69.8.148", port="5432")
     cur = conn.cursor()
     for item in logList:
-        cur.execute('''INSERT INTO "Attend_attend"(lock_time,comment,"userId_id") VALUES(%s, %s,%s)''', (item[1],'in',item[0]))
+        if isToday:
+            now = datetime.datetime.now()
+            today_str = str(now.year)+'-'+str(now.month)+'-'+str(now.day)
+            if(item[1] > today_str):
+                cur.execute('''INSERT INTO "Attend_attend"(lock_time,comment,"userId_id") VALUES(%s, %s,%s)''', (item[1],'in',item[0]))
+        else:
+            cur.execute('''INSERT INTO "Attend_attend"(lock_time,comment,"userId_id") VALUES(%s, %s,%s)''', (item[1],'in',item[0]))
     conn.commit()
     cur.close()
     conn.close()
@@ -89,7 +97,6 @@ def RunOneTime():
     atts.disConnect()
     addUsersToPostgres(userList)
     print 'run finish'
-
 
 if __name__=='__main__':
     #RunOneTime()
