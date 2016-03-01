@@ -65,7 +65,7 @@ class AttLogsSys():
         
 import psycopg2
 def addUsersToPostgres(userList):
-    conn = psycopg2.connect(database="attendance_system", user="odoo", password="odoo", host="172.69.8.148", port="5432")
+    conn = psycopg2.connect(database="attendance_system", user="openerp", password="dsa", host="172.69.8.25", port="5432")
     cur = conn.cursor()
     for item in userList:
         cur.execute("INSERT INTO auth_user(id,password,is_superuser,username,first_name,last_name,email,is_staff,is_active,date_joined) VALUES(%s, %s,%s, %s,%s, %s,%s, %s,%s, %s)", (item[0],'pbkdf2_sha256$20000$1OTf0NQKYUGm$/74pobT4hcILlod3RX+XqVQ4dCMVpUeTpHeIgsIjnbo=',False,item[1],'','','',True,True,'2016-2-23 12:00:00'))
@@ -99,15 +99,27 @@ def RunOneTime():
     print 'run finish'
 
 if __name__=='__main__':
-    #RunOneTime()
+    # RunOneTime()
+    file_log = open('atta.log','w')
+    
+    file_log.writelines('start')
     atts = AttLogsSys('zkemkeeper.ZKEM','172.69.8.4',4370)
     atts.connect()
+    file_log.writelines('connect 4 success.')
     logList = atts.getAllAttLogs()
     atts.disConnect()
-    addAttLogsToPostgres(logList)
-    print 'run finish'
-
-
+    addAttLogsToPostgres(logList,True)
+    file_log.writelines('run finish machine 4') 
+   
+    atts = AttLogsSys('zkemkeeper.ZKEM','172.69.8.5',4370)
+    atts.connect()
+    file_log.writelines('connect 5 success.')
+    logList = atts.getAllAttLogs()
+    atts.disConnect()
+    addAttLogsToPostgres(logList,True)
+    print 'run finish machine 5'
+    file_log.writelines('run finish machine 5') 
+    file_log.close()
 
 
     
