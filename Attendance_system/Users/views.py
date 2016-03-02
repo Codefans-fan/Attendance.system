@@ -43,7 +43,7 @@ def change_passwd(req):
         form = PasswordChangeForm(req)
     context = {
         'form':form,
-        'errors':form.error_messages
+        'errors':form.errors.get('__all__','')
         }
     return render(req, 'changepasswd.html', context)
 

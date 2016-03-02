@@ -21,13 +21,11 @@ print token
 #send message
 #https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=ACCESS_TOKEN
 
-# get user id
-#https://qyapi.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&userid=USERID
 params = urllib.urlencode({'touser': '@all','toparty':'@all','totag':'@all','msgtype': "text",'agentid':0,'text':{'content':'hello world'},'safe':'0'})
 headers = {"Content-type": "application/x-www-form-urlencoded"
                     , "Accept": "text/plain"}
 str_1 = '''{
-   "touser": "fky",
+   "touser": "@all",
    "msgtype": "text",
    "agentid": 0,
    "text": {
@@ -37,8 +35,6 @@ str_1 = '''{
 }'''
 url = "/cgi-bin/message/send?access_token="+token
 
-
-url1 = '/cgi-bin/user/get?access_token=' + token +'&userid=fky'
 c.request("POST",url ,str_1)
 response = c.getresponse()
 data = response.read()
