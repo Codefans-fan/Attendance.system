@@ -20,9 +20,10 @@
    </tr>
    <tr>
       <td colspan="2">
-      <div style="text-align: center; color: red;
- ">
-  {{errors}}
+      <div style="text-align: center; color: red;">
+  {% for msg in errors%}
+    {{ msg}} <br/>
+  {% endfor %}
  </div>
       </td>
    </tr>
