@@ -99,18 +99,17 @@ def clean_attend_database(req):
 def task_weichat_notice(req):
     users = User.objects.all()
     for user in users:
-        attends =  Attend.objects.filter(userId=user.id,lock_time__gte = datetime.datetime.today().strftime("%Y-%m-%d")).order_by('lock_time')
-        print attends
-        show_list = __filter_day_record(attends)
-        if len(show_list) > 1:
-            delta_time = show_list[-1].lock_time - show_list[0].lock_time
-            if delta_time >= datetime.timedelta(hours=9):
-                print 'lock success'
+        if user.id == 21:
+            attends =  Attend.objects.filter(userId=user.id,lock_time__gte = datetime.datetime.today().strftime("%Y-%m-%d")).order_by('lock_time')
+            show_list = __filter_day_record(attends)
+            if len(show_list) > 1:
+                delta_time = show_list[-1].lock_time - show_list[0].lock_time
+                if delta_time >= datetime.timedelta(hours=9):
+                    print 'lock success'
+                else:
+                    _weichat_msg()
             else:
-               _weichat_msg()
-        else:
-            _weichat_msg()
-        
+                _weichat_msg()
     return HttpResponseRedirect("/")
 
 
