@@ -42,11 +42,9 @@ def task_weichat_notice(req):
             if len(show_list) > 1:
                 delta_time = show_list[-1].lock_time - show_list[0].lock_time
                 msg_str = msg_templete %(ref_weichat[0].weichatname,int(delta_time))
-                print msg_str
                 _weichat_msg(msg_str,token)
             else:
                 msg_str = msg_templete %(ref_weichat[0].weichatname,0)
-                print msg_str
                 _weichat_msg(msg_str,token)
     return HttpResponseRedirect("/")
 
