@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'Users.apps.UsersConfig',
     'base.apps.BaseConfig',
     'Attend.apps.AttendConfig',
+    'weichat.apps.WeichatConfig',
+    
 ]
 
 MIDDLEWARE_CLASSES = [
