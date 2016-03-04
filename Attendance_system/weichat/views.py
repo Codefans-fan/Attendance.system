@@ -3,7 +3,9 @@ from Attend.models import Attend
 from models import user_weichat
 from django.contrib.auth.models import User
 
+
 import datetime
+import itertools
 # Create your views here.
 msg_templete = '''{
    "touser": "%s",
@@ -32,6 +34,8 @@ def __filter_day_record(records):
     
 
 def task_weichat_notice(req):
+    if datetime.isoweekday(datetime.datetime.today()) >5:
+        return HttpResponseRedirect("/")
     users = User.objects.all()
     token = _get_weichat_token()
     for user in users:
@@ -41,7 +45,8 @@ def task_weichat_notice(req):
             show_list = __filter_day_record(attends)
             if len(show_list) > 1:
                 delta_time = show_list[-1].lock_time - show_list[0].lock_time
-                msg_str = msg_templete %(ref_weichat[0].weichatname,int(delta_time))
+                work_hour = float('%0.2f' % (delta_time.total_seconds()/3600))
+                msg_str = msg_templete %(ref_weichat[0].weichatname,work_hour)
                 _weichat_msg(msg_str,token)
             else:
                 msg_str = msg_templete %(ref_weichat[0].weichatname,0)
