@@ -35,9 +35,9 @@ def task_weichat_notice(req):
     users = User.objects.all()
     token = _get_weichat_token()
     for user in users:
-        attends =  Attend.objects.filter(userId=user.id,lock_time__gte = datetime.datetime.today().strftime("%Y-%m-%d")).order_by('lock_time')
         ref_weichat = user_weichat.objects.filter(userid=user.id)
         if ref_weichat:
+            attends =  Attend.objects.filter(userId=user.id,lock_time__gte = datetime.datetime.today().strftime("%Y-%m-%d")).order_by('lock_time')
             show_list = __filter_day_record(attends)
             if len(show_list) > 1:
                 delta_time = show_list[-1].lock_time - show_list[0].lock_time
