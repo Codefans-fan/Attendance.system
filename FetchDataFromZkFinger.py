@@ -10,6 +10,21 @@ Created on Feb 23, 2016
 
 from win32com.client import Dispatch
 
+import logging  
+import logging.handlers
+
+
+LOG_FILE = 'fetchData.log'
+handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes = 1024*1024, backupCount = 5) # handler   
+fmt = '%(asctime)s - %(filename)s:%(lineno)s - %(name)s - %(message)s'  
+
+formatter = logging.Formatter(fmt)   # formatter  
+handler.setFormatter(formatter)      # add formatter  
+
+logger = logging.getLogger('fetch')    # get logger  
+logger.addHandler(handler)           # add logger handler  
+logger.setLevel(logging.DEBUG)  
+
 class AttLogsSys():
     def __init__(self,comName,m_ip,m_port,m_machin=1):
         self.manage = Dispatch("zkemkeeper.ZKEM")
@@ -20,9 +35,9 @@ class AttLogsSys():
     def connect(self):
         if self.manage.Connect_Net(self.ip, self.port):
             self.manage.RegEvent(self.machine,65535)
-            print 'connect success'
+            logger.info('connect '+self.ip + 'success.')
         else:
-            print 'connect failed'
+            logger.info('connect '+self.ip + 'fail.')
     
     def getAllUserInfo(self):
         '''
@@ -30,6 +45,7 @@ class AttLogsSys():
            return user list
                  (userid, username)
         '''
+        logger.info('start get user info.')
         userInfos = []
         self.manage.EnableDevice(self.machine, False)  #disable the device
         if self.manage.ReadAllUserID(self.machine):
@@ -40,6 +56,7 @@ class AttLogsSys():
                 else:
                     break
         self.manage.EnableDevice(self.machine, True)  #enable the device
+        logger.info('end get user info.')
         return userInfos
     
     def getAllAttLogs(self):
@@ -48,6 +65,7 @@ class AttLogsSys():
            return att list
                  (userid, att_time)
         '''
+        logger.info('start get attendance log.')
         attList = []
         self.manage.EnableDevice(self.machine, False)  #disable the device
         if self.manage.ReadGeneralLogData(self.machine):
@@ -58,68 +76,78 @@ class AttLogsSys():
                 else:
                     break
         self.manage.EnableDevice(self.machine, True)  #enable the device
+        logger.info('end get attendance log.')
         return attList
     
     def disConnect(self):
+        logger.info('disconnect the machine.')
         self.manage.Disconnect()
         
 import psycopg2
 def addUsersToPostgres(userList):
-    conn = psycopg2.connect(database="attendance_system", user="openerp", password="dsa", host="172.69.8.25", port="5432")
-    cur = conn.cursor()
-    for item in userList:
-        cur.execute("INSERT INTO auth_user(id,password,is_superuser,username,first_name,last_name,email,is_staff,is_active,date_joined) VALUES(%s, %s,%s, %s,%s, %s,%s, %s,%s, %s)", (item[0],'pbkdf2_sha256$20000$1OTf0NQKYUGm$/74pobT4hcILlod3RX+XqVQ4dCMVpUeTpHeIgsIjnbo=',False,item[1],'','','',True,True,'2016-2-23 12:00:00'))
-    conn.commit()
-    cur.close()
-    conn.close()
+    logger.info('add/update user info to database.')
+    try:
+        conn = psycopg2.connect(database="attendance_system", user="openerp", password="dsa", host="172.69.8.25", port="5432")
+        cur = conn.cursor()
+        for item in userList:
+            logger.info('check user ' + str(item[0]))
+            #cur.execute("INSERT INTO auth_user(id,password,is_superuser,username,first_name,last_name,email,is_staff,is_active,date_joined) VALUES(%s, %s,%s, %s,%s, %s,%s, %s,%s, %s)", (item[0],'pbkdf2_sha256$20000$1OTf0NQKYUGm$/74pobT4hcILlod3RX+XqVQ4dCMVpUeTpHeIgsIjnbo=',False,item[1],'','','',True,True,'2016-2-23 12:00:00'))
+            #cur.execute("if not exists(select * from auth_user where id = %s) begin insert into auth_user(id,password,is_superuser,username,first_name,last_name,email,is_staff,is_active,date_joined) VALUES(%s, %s,%s, %s,%s, %s,%s, %s,%s, %s) end", (item[0],item[0],'pbkdf2_sha256$20000$1OTf0NQKYUGm$/74pobT4hcILlod3RX+XqVQ4dCMVpUeTpHeIgsIjnbo=',False,item[1],'','','',True,True,'2016-2-23 12:00:00'))
+            cur.execute('SELECT update_userdb(%s, %s,%s, %s,%s, %s,%s, %s,%s, %s)', (item[0],'pbkdf2_sha256$20000$1OTf0NQKYUGm$/74pobT4hcILlod3RX+XqVQ4dCMVpUeTpHeIgsIjnbo=',False,item[1],'','','',True,True,'2016-2-23 12:00:00'))
+        conn.commit()
+        cur.close()
+        conn.close()
+    except e:
+        logger.error(e)
+    logger.info('end add/update user info to database.')
 
 import datetime
 
 def addAttLogsToPostgres(logList,isToday=None):
-    conn = psycopg2.connect(database="attendance_system", user="odoo", password="odoo", host="172.69.8.148", port="5432")
-    cur = conn.cursor()
-    for item in logList:
-        if isToday:
-            now = datetime.datetime.now()
-            today_str = str(now.year)+'-'+str(now.month)+'-'+str(now.day)
-            if(item[1] > today_str):
+    logger.info('add attendance log to database.')
+    try:
+        conn = psycopg2.connect(database="attendance_system", user="openerp", password="dsa", host="172.69.8.148", port="5432")
+        cur = conn.cursor()
+        for item in logList:
+            if isToday:
+                now = datetime.datetime.now()
+                today_str = str(now.year)+'-'+str(now.month)+'-'+str(now.day)
+                if(item[1] > today_str):
+                    cur.execute('''INSERT INTO "Attend_attend"(lock_time,comment,"userId_id") VALUES(%s, %s,%s)''', (item[1],'in',item[0]))
+            else:
                 cur.execute('''INSERT INTO "Attend_attend"(lock_time,comment,"userId_id") VALUES(%s, %s,%s)''', (item[1],'in',item[0]))
-        else:
-            cur.execute('''INSERT INTO "Attend_attend"(lock_time,comment,"userId_id") VALUES(%s, %s,%s)''', (item[1],'in',item[0]))
-    conn.commit()
-    cur.close()
-    conn.close()
-
-def RunOneTime():
-    atts = AttLogsSys('zkemkeeper.ZKEM','172.69.8.4',4370)
-    atts.connect()
-    userList = atts.getAllUserInfo()
-    atts.disConnect()
-    addUsersToPostgres(userList)
-    print 'run finish'
+        conn.commit()
+        cur.close()
+        conn.close()
+    except e:
+        logger.error(e)
+    logger.info('end add attendance log to database.')
+# def RunOneTime():
+#     atts = AttLogsSys('zkemkeeper.ZKEM','172.69.8.4',4370)
+#     atts.connect()
+#     userList = atts.getAllUserInfo()
+#     atts.disConnect()
+#     addUsersToPostgres(userList)
+#     print 'run finish'
 
 if __name__=='__main__':
     # RunOneTime()
-    file_log = open('atta.log','w')
-    
-    file_log.writelines('start')
+    logger.info('script start.')
     atts = AttLogsSys('zkemkeeper.ZKEM','172.69.8.4',4370)
     atts.connect()
-    file_log.writelines('connect 4 success.')
+    userinfos = atts.getAllUserInfo()
     logList = atts.getAllAttLogs()
     atts.disConnect()
+    addUsersToPostgres(userinfos)
     addAttLogsToPostgres(logList,True)
-    file_log.writelines('run finish machine 4') 
    
     atts = AttLogsSys('zkemkeeper.ZKEM','172.69.8.5',4370)
     atts.connect()
-    file_log.writelines('connect 5 success.')
     logList = atts.getAllAttLogs()
     atts.disConnect()
     addAttLogsToPostgres(logList,True)
-    print 'run finish machine 5'
-    file_log.writelines('run finish machine 5') 
-    file_log.close()
+    
+    logger.info('script end.')
 
 
     
