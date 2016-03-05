@@ -1,22 +1,17 @@
-CREATE FUNCTION update_userdb(key INT, ps text, issuper boolean,uname text,fname text ,lname text,umail text,isstaff text,isactive text, datejoined timestamp) RETURNS VOID AS
+﻿CREATE OR REPLACE FUNCTION update_userdb(key INT, ps character, issuper boolean,uname character,fname character ,lname character,umail character,isstaff boolean,isactive boolean, datejoined timestamp) RETURNS VOID AS
 $$
+DECLARE
+    temprec RECORD;
+    tmpint  INTEGER := 0;
 BEGIN
-    LOOP
-        -- first try to update the key
-        select id from auth_user WHERE id = key;
-        IF found THEN
-            RETURN;
-        END IF;
-        -- not there, so try to insert the key
-        -- if someone else inserts the same key concurrently,
-        -- we could get a unique-key failure
-        BEGIN
-            INSERT INTO auth_user(id,password,is_superuser,username,first_name,last_name,email,is_staff,is_active,date_joined) values(key, ps, issuper,uname,fname,lname,umail,isstaff,isactive,datejoined);
-            RETURN;
-        EXCEPTION WHEN unique_violation THEN
-            -- Do nothing, and loop to try the UPDATE again.
-        END;
-    END LOOP;
+
+    select id FROM auth_user WHERE id=key INTO temprec;
+    GET DIAGNOSTICS tmpint = ROW_COUNT;
+    
+    IF tmpint = 0 Then 
+         INSERT INTO auth_user(id,password,is_superuser,username,first_name,last_name,email,is_staff,is_active,date_joined) values(key, ps, issuper,uname,fname,lname,umail,isstaff,isactive,datejoined);
+    END IF;
+
 END;
 $$
 LANGUAGE plpgsql;
