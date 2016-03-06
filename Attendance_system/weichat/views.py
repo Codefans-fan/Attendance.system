@@ -45,7 +45,7 @@ def task_weichat_notice(req):
             show_list = __filter_day_record(attends)
             if len(show_list) > 1:
                 delta_time = show_list[-1].lock_time - show_list[0].lock_time
-                work_hour = float('%0.2f' % (delta_time.total_seconds()/3600))
+                work_hour = float('%.2f' % (delta_time.total_seconds()/3600))
                 msg_str = msg_templete %(ref_weichat[0].weichatname,work_hour)
                 _weichat_msg(msg_str,token)
             else:
