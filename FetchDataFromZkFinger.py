@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 '''
 Created on Feb 23, 2016
 
@@ -106,7 +106,7 @@ import datetime
 def addAttLogsToPostgres(logList,isToday=None):
     logger.info('add attendance log to database.')
     try:
-        conn = psycopg2.connect(database="attendance_system", user="openerp", password="dsa", host="172.69.8.148", port="5432")
+        conn = psycopg2.connect(database="attendance_system", user="openerp", password="dsa", host="172.69.8.25", port="5432")
         cur = conn.cursor()
         for item in logList:
             if isToday:
