@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE FUNCTION update_userdb(key INT, ps character, issuper boolean,uname character,fname character ,lname character,umail character,isstaff boolean,isactive boolean, datejoined timestamp) RETURNS VOID AS
+CRCEATE OR REPLACE FUNCTION update_userdb(key INT, ps character, issuper boolean,uname character,fname character ,lname character,umail character,isstaff boolean,isactive boolean, datejoined timestamp) RETURNS VOID AS
 $$
 DECLARE
     temprec RECORD;
