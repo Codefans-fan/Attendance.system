@@ -34,8 +34,6 @@ def __filter_day_record(records):
     
 
 def task_weichat_notice(req):
-    if datetime.isoweekday(datetime.datetime.today()) >5:
-        return HttpResponseRedirect("/")
     users = User.objects.all()
     token = _get_weichat_token()
     for user in users:
