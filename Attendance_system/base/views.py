@@ -12,3 +12,7 @@ def base(req):
 
 def menutest(req):
     return render(req, 'base/leftTest.html')
+
+
+def donate(req):
+    return render(req, 'base/donate.html')
