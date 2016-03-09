@@ -12,7 +12,7 @@ msg_templete = '''{
    "msgtype": "text",
    "agentid": 0,
    "text": {
-       "content": "work hour: %d. (contain lunch time)"
+       "content": "work hour: %s (contain lunch time)"
    },
    "safe":"0"
     }'''
