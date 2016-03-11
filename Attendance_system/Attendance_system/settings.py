@@ -59,7 +59,9 @@ ROOT_URLCONF = 'Attendance_system.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "base/templates"),os.path.join(BASE_DIR, "Users/templates"),os.path.join(BASE_DIR, "Attend/templates"),],
+        'DIRS': [os.path.join(BASE_DIR, "base/templates"),os.path.join(BASE_DIR, "Users/templates"),os.path.join(BASE_DIR, "Attend/templates"),
+                 os.path.join(BASE_DIR, "weichat/templates"),
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,9 +84,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'attendance_system',
-        'USER': 'postgres',
-        'PASSWORD': 'fky',
-        'HOST': '127.0.0.1',
+        'USER': 'odoo',
+        'PASSWORD': 'odoo',
+        'HOST': '172.69.8.148',
         'PORT': '5432',
     }
 }

@@ -1,3 +1,5 @@
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from Attend.models import Attend
 from models import user_weichat
@@ -7,6 +9,7 @@ from django.contrib.auth.models import User
 import datetime
 import itertools
 # Create your views here.
+
 msg_templete = '''{
    "touser": "%s",
    "msgtype": "text",
@@ -17,6 +20,10 @@ msg_templete = '''{
    "safe":"0"
     }'''
 
+
+@login_required(login_url="/user/login")
+def weichat(req):
+    return render(req, "weichat/weichat.html")
 
 def __filter_day_record(records):
     if records:
