@@ -5,7 +5,7 @@ DECLARE
     tmpint  INTEGER := 0;
 BEGIN
 
-    select id FROM "Attend_attend" WHERE "userId_id"=userid INTO temprec;
+    select id FROM "Attend_attend" WHERE "userId_id"=userid and lock_time=locktime INTO temprec;
     GET DIAGNOSTICS tmpint = ROW_COUNT;
     
     IF tmpint = 0 Then 
