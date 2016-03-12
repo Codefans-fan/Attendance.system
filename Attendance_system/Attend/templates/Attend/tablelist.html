@@ -12,7 +12,7 @@
   <thead>
     <tr>
       <th>User</th>
-      <th>Sign in</th>
+      <th class="tablesorter-headerDesc">Sign in</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -46,7 +46,12 @@
 $(function(){
 	  $("#myTable").tablesorter({
 		  theme:"ice",
+		  sortList: [[1,1]],
 		  cancelSelection:false,
+		  widgets: ['filter'],
+		  widgetOptions: {
+			  filter_columnFilters: true,
+		  },
 	  }).tablesorterPager({
 		 container: $(".pager"),
 		 size: 20,
