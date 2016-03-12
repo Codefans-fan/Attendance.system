@@ -113,7 +113,8 @@ def addAttLogsToPostgres(logList,isToday=None):
                 now = datetime.datetime.now()
                 today_str = str(now.year)+'-'+str(now.month)+'-'+str(now.day)
                 if(item[1] > today_str):
-                    cur.execute('''INSERT INTO "Attend_attend"(lock_time,comment,"userId_id") VALUES(%s, %s,%s)''', (item[1],'in',item[0]))
+                    #cur.execute('''INSERT INTO "Attend_attend"(lock_time,comment,"userId_id") VALUES(%s, %s,%s)''', (item[1],'in',item[0]))
+                    cur.execute('''SELECT update_attendancedb(%s, %s)''',(item[0],item[1]))
             else:
                 cur.execute('''INSERT INTO "Attend_attend"(lock_time,comment,"userId_id") VALUES(%s, %s,%s)''', (item[1],'in',item[0]))
         conn.commit()
