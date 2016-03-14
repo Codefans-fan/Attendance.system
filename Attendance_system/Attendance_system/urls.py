@@ -25,6 +25,7 @@ from Attend.views import index as attend_index
 from Attend.views import show_table_list
 from Attend.views import show_canlendar
 from Attend.views import clean_attend_database
+from Attend.views import show_chart
 
 from weichat.views import weichat
 from weichat.views import task_weichat_notice
@@ -44,9 +45,9 @@ urlpatterns = [
     url(r'^attend/$',attend_index),
     url(r'^attend/id=([0-9]+)',show_table_list),
     url(r'^attend/id=(all)',show_table_list),
-    url(r'^attend/type=([0-9])&id=([0-9]+)$',show_canlendar),
+    url(r'^attend/type=1&id=([0-9]+)$',show_canlendar),
     url(r'^attend/clean_attend_database',clean_attend_database),
-    
+    url(r'^attend/type=2&id=([0-9]+)$',show_chart),
     
     #weichat
     url(r'^weichat',weichat),

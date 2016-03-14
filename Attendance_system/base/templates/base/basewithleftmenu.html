@@ -3,7 +3,6 @@
 
 {% block leftmenu %}
 <style type="text/css">
-
 /*left*/
 .leftsidebar_box{margin-top:-30px; width:10%;height:auto !important;overflow:visible !important;position:fixed;height:100% !important;background-color:#9d9d9d;}
 .line{height:2px;width:100%;background-image:url(images/left/line_bg.png);background-repeat:repeat-x;}
@@ -11,7 +10,20 @@
 .leftsidebar_box dd{background-color:#777777;padding-left:20%;display:none;width:80%; height:23px; overflow:hidden;}
 .leftsidebar_box dd a{color:#f5f5f5;line-height:20px;}
 </style>
-
+<div id="form_header">
+  <ul class="attend_view_manager_switch">
+        <li class="attend_e">
+           <a  href="javascript:show_table_list();"><i class="fa fa-align-justify"></i></a>
+         </li>
+        <li class="attend_e">
+           <a  href="javascript:show_calendar();"><i class="fa fa-calendar"></i></a>
+         </li>
+         <li class="attend_e">
+           <a  href="javascript:show_charts();"><i class="fa fa-bar-chart"></i></a>
+         </li>
+         
+         </ul>
+</div>
 <div class="menu_left">
   <div class="leftsidebar_box">
      {% for item in menu %}

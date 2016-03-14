@@ -1,0 +1,61 @@
+{% load  staticfiles %}
+<script type="text/javascript" src="{% static 'js/jquery.min_2.1.4.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/highcharts.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/modules/exporting.js'%}"></script>
+<div>
+<div id="container" style="min-width:700px;height:400px"></div>
+</div>
+ <script>
+ $(function () {
+    function toString(){
+       arr = [];
+    	 {% for item in items %}
+    	   arr.push( {{item}});
+		 {% endfor %}
+		
+	  return arr;
+    };
+    $('#container').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Weekly Chart',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'source:attendance logs',
+            x: -20
+        },
+        xAxis: {
+            categories: ['Mon', 'Tue', 'Wen', 'Thu', 'Fri', 'Sat','Sun']
+        },
+        yAxis: {
+            min:0,
+            title: {
+                text: 'Hours'
+            },
+            maxPadding:1
+        },
+        tooltip: {
+            valueSuffix: 'h'
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: "{{ user}}",
+            data: toString()
+        }]
+    });
+});
+				
+ 
+ 
+</script>
+
+
+
