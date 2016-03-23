@@ -5,6 +5,7 @@ from Attend.models import Attend
 from models import user_weichat
 from django.contrib.auth.models import User
 
+from models import edit_form
 
 import datetime
 import itertools
@@ -23,7 +24,17 @@ msg_templete = '''{
 
 @login_required(login_url="/user/login")
 def weichat(req):
-    return render(req, "weichat/weichat.html")
+    if req.method == 'POST':
+        form = edit_form(data=req.POST)
+        if form.is_valid():
+            print form.cleaned_data['weichatname']
+        
+    else:
+        form = edit_form(initial={'userid': req.user.username},)
+    context = {
+        'form':form,
+        }
+    return render(req, "weichat/weichat.html",context)
 
 def __filter_day_record(records):
     if records:
