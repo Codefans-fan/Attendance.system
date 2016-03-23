@@ -29,6 +29,9 @@ from Attend.views import show_chart
 
 from weichat.views import weichat
 from weichat.views import task_weichat_notice
+
+
+from notice.views import notice_index
 urlpatterns = [
     url(r'^$', index),
     #admin    
@@ -51,6 +54,11 @@ urlpatterns = [
     
     #weichat
     url(r'^weichat',weichat),
-    url(r'^weichat/task_weichat_notice',task_weichat_notice)
+    url(r'^weichat/task_weichat_notice',task_weichat_notice),
     #url(r'^attend/type=([0-9])&id=([0-9]+)&start=(\d{4}-\d{2}-\d{2})&end=(\d{4}-\d{2}-\d{2})',show_canlendar),
+    
+    #notice
+    url(r'^notice',notice_index)
+
+
 ]

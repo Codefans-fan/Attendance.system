@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     'Attend.apps.AttendConfig',
     'weichat.apps.WeichatConfig',
+    'notice',
     
 ]
 
@@ -60,7 +61,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, "base/templates"),os.path.join(BASE_DIR, "Users/templates"),os.path.join(BASE_DIR, "Attend/templates"),
-                 os.path.join(BASE_DIR, "weichat/templates"),
+                 os.path.join(BASE_DIR, "weichat/templates"),os.path.join(BASE_DIR, "notice/templates")
                  ],
         'APP_DIRS': True,
         'OPTIONS': {
