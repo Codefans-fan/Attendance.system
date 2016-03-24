@@ -53,7 +53,7 @@ urlpatterns = [
     url(r'^attend/type=2&id=([0-9]+)$',show_chart),
     
     #weichat
-    url(r'^weichat',weichat),
+    url(r'^weichat/$',weichat),
     url(r'^weichat/task_weichat_notice',task_weichat_notice),
     #url(r'^attend/type=([0-9])&id=([0-9]+)&start=(\d{4}-\d{2}-\d{2})&end=(\d{4}-\d{2}-\d{2})',show_canlendar),
     
