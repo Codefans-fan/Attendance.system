@@ -32,6 +32,9 @@ from weichat.views import task_weichat_notice
 
 
 from notice.views import notice_index
+
+
+from mail.views import mail_index
 urlpatterns = [
     url(r'^$', index),
     #admin    
@@ -58,7 +61,10 @@ urlpatterns = [
     #url(r'^attend/type=([0-9])&id=([0-9]+)&start=(\d{4}-\d{2}-\d{2})&end=(\d{4}-\d{2}-\d{2})',show_canlendar),
     
     #notice
-    url(r'^notice',notice_index)
+    url(r'^notice/$',notice_index),
+    
 
+    #mail
+    url(r'^email/$',mail_index)
 
 ]

@@ -5,34 +5,36 @@ from Attend.models import Attend
 from models import user_weichat
 from django.contrib.auth.models import User
 
-from models import edit_form
+from models import WechatEditForm
 
 import datetime
 import itertools
+import wechat_utils
 # Create your views here.
-
-msg_templete = '''{
-   "touser": "%s",
-   "msgtype": "text",
-   "agentid": 0,
-   "text": {
-       "content": "work hour: %s (contain lunch time)"
-   },
-   "safe":"0"
-    }'''
-
 
 @login_required(login_url="/user/login")
 def weichat(req):
     if req.method == 'POST':
-        form = edit_form(data=req.POST)
+        form = WechatEditForm(data=req.POST)
         if form.is_valid():
-            print form.cleaned_data['weichatname']
-        
+            lines = user_weichat.objects.filter(userid=req.user.id)
+            if not lines:
+                current_user = User.objects.get(id=req.user.id)
+                userObj = user_weichat(userid=current_user,weichatname=form.cleaned_data['shortname'])
+                userObj.save()
+            return HttpResponseRedirect("/weichat")
     else:
-        form = edit_form(initial={'userid': req.user.username},)
+        lines = user_weichat.objects.filter(userid=req.user.id)
+        shortname =''
+        if lines:
+            shortname= lines[0].weichatname
+        if shortname:
+            form = WechatEditForm(readonly_shortname=True,initial={'username': req.user.username,'shortname':shortname},)
+        else:
+            form = WechatEditForm(initial={'username': req.user.username},)
     context = {
         'form':form,
+        'errors':form.errors.get('shortname','')
         }
     return render(req, "weichat/weichat.html",context)
 
@@ -53,7 +55,7 @@ def __filter_day_record(records):
 
 def task_weichat_notice(req):
     users = User.objects.all()
-    token = _get_weichat_token()
+    token = wechat_utils.get_weichat_token()
     for user in users:
         ref_weichat = user_weichat.objects.filter(userid=user.id)
         if ref_weichat:
@@ -62,33 +64,9 @@ def task_weichat_notice(req):
             if len(show_list) > 1:
                 delta_time = show_list[-1].lock_time - show_list[0].lock_time
                 work_hour = float('%.2f' % (delta_time.total_seconds()/3600))
-                msg_str = msg_templete %(ref_weichat[0].weichatname,work_hour)
-                _weichat_msg(msg_str,token)
+                msg_str = wechat_utils.msg_templete %(ref_weichat[0].weichatname,work_hour)
+                wechat_utils.weichat_msg(msg_str,token)
             else:
-                msg_str = msg_templete %(ref_weichat[0].weichatname,0)
-                _weichat_msg(msg_str,token)
+                msg_str = wechat_utils.msg_templete %(ref_weichat[0].weichatname,0)
+                wechat_utils.weichat_msg(msg_str,token)
     return HttpResponseRedirect("/")
-
-
-import httplib
-import json
-import urllib
-
-
-def _weichat_msg(msg,token):
-    url = "/cgi-bin/message/send?access_token="+token
-    c = httplib.HTTPSConnection("qyapi.weixin.qq.com")
-    c.request("POST",url ,msg)
-    response = c.getresponse()
-    data = response.read()
-    print data
-
-def _get_weichat_token():
-    c = httplib.HTTPSConnection("qyapi.weixin.qq.com")
-    c.request("GET", "/cgi-bin/gettoken?corpid=wx416865667552f10b&corpsecret=60gcQRI8S-1hbMSvqf5CzBnYKBk1O3qOTmPw9Lk37Rxm6bFYifoyu4Me-P5sd53G")
-    response = c.getresponse()
-    #print response.status, response.reason
-    data = response.read()
-    result = json.loads(data)
-    return result.get('access_token',False)
-

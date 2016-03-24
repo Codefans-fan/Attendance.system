@@ -5,6 +5,8 @@ import httplib
 import json
 import urllib
 
+import wechat_utils
+
 # Create your tests here.
 def _weichat_msg():
      c = httplib.HTTPSConnection("qyapi.weixin.qq.com")
@@ -28,12 +30,13 @@ def _weichat_msg():
     },
     "safe":"0"
      }'''
-     url = "/cgi-bin/message/send?access_token="+token
- 
-     c.request("POST",url ,str_1)
-     response = c.getresponse()
-     data = response.read()
+#      url = "/cgi-bin/message/send?access_token="+token
+#  
+#      c.request("POST",url ,str_1)
+#      response = c.getresponse()
+#      data = response.read()
      #print data
+     print wechat_utils.validate_weichat_user('lxj',token)
 
 
 

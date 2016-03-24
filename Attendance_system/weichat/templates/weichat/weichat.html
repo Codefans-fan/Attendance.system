@@ -8,21 +8,33 @@
    {% csrf_token %}
    	 <tr>
    	   <td>User:</td>
-   	   <td> {{ form.userid}}</td>
+   	   <td> {{ form.username}}</td>
    	 </tr>
      <tr>
         <td>ShortName:</td>
-        <td> {{ form.weichatname }}</td>
+        <td> {{ form.shortname }}</td>
      </tr>
      <tr>
       <td colspan="2">
-       {{errors}}
+      <br/>
+       <font color='red'> {{errors}} </font>
       </td>
      </tr>
+    
+     {% if form.shortname.value  %}
+     <tr>
+       <td colspan="2">
+       <br/>
+        It's seem everything is ok.<br/>
+        If you want to change please contact to manager.
+       </td>
+     </tr>
+     {% else %}
      <tr>
        <td></td>
        <td><input type="submit" value="Save" id="save" name="Save"></td>
      </tr>
+     {% endif %}
      </form>
    </table>
 <br/>

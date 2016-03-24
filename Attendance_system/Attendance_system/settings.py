@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Attend.apps.AttendConfig',
     'weichat.apps.WeichatConfig',
     'notice',
+    'mail'
     
 ]
 
