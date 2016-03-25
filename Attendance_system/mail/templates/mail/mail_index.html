@@ -2,9 +2,41 @@
 {% load staticfiles %} 
 {% block content %}
 
-<div style="text-align:center;font-size:40px;">
-
-To Be Done
+<div style="text-align:center;font-size:25px;">
+   <table style="margin:auto;">
+    <form action=""  method="post">
+   {% csrf_token %}
+   	 <tr>
+   	   <td>User:</td>
+   	   <td> {{ form.username}}</td>
+   	 </tr>
+     <tr>
+        <td>Email:</td>
+        <td> {{ form.umail }}</td>
+     </tr>
+     <tr>
+      <td colspan="2">
+       Email Template:<br/>
+       {{ form.mailtemplate }}
+      </td>
+     </tr>
+     <tr>
+      <td colspan="2">
+      <br/>
+       <font color='red'> {{errors}} </font>
+      </td>
+     </tr>
+     <tr>
+       <td></td>
+       <td><input type="submit" value="Save" id="save" name="Save"></td>
+     </tr>
+     </form>
+   </table>
+<br/>
+<br/>
+<br/>
+<br/>
+  When everything is done. The system will send daily email to you.
 </div>
 
 {% endblock %}
