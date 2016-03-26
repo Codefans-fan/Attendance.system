@@ -16,7 +16,9 @@
      </tr>
      <tr>
       <td colspan="2">
-       {{errors}}
+      {% if errors %}
+       <font color='red'> {{errors}}</font>
+       {% endif%}
       </td>
      </tr>
      <tr>

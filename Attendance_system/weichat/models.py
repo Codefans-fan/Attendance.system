@@ -5,10 +5,6 @@ from django.contrib import admin
 
 from django.forms import ModelForm
 from django import forms
-from django.forms.widgets import Select
-from django.utils.html import format_html
-from django.utils.safestring import mark_safe
-from django.forms.utils import flatatt
 
 
 from itertools import chain
@@ -22,12 +18,9 @@ class  user_weichat(models.Model):
 
 
 class edit_form(ModelForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, uid, *args, **kwargs):
         super(edit_form, self).__init__(*args, **kwargs)
-        self.fields['userid'].widget.attrs['readonly'] = True
+        
     class Meta:
         model = user_weichat
         fields = ('userid', 'weichatname')  
-        widgets = {
-           'userid': forms.TextInput(),
-        }

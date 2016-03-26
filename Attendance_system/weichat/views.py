@@ -27,12 +27,12 @@ def weichat(req):
     if req.method == 'POST':
         form = edit_form(data=req.POST)
         if form.is_valid():
-            print form.cleaned_data['weichatname']
-        
+            form.save()
     else:
-        form = edit_form(initial={'userid': req.user.username},)
+        form = edit_form(req.user.id,initial={'userid': req.user.id},)
     context = {
         'form':form,
+        'errors':form.errors 
         }
     return render(req, "weichat/weichat.html",context)
 

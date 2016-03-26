@@ -85,9 +85,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'attendance_system',
-        'USER': 'odoo',
-        'PASSWORD': 'odoo',
-        'HOST': '172.69.8.148',
+        'USER': 'postgres',
+        'PASSWORD': 'fky',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
