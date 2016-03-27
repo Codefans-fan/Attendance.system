@@ -35,6 +35,7 @@ from notice.views import notice_index
 
 
 from mail.views import mail_index
+from mail.views import task_mail_notice
 urlpatterns = [
     url(r'^$', index),
     #admin    
@@ -65,6 +66,7 @@ urlpatterns = [
     
 
     #mail
-    url(r'^email/$',mail_index)
+    url(r'^email/$',mail_index),
+    url(r'^email/task_mail_notice',task_mail_notice)
 
 ]
