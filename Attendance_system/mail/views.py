@@ -8,12 +8,13 @@ from Attend.models import Attend
 from models import EmailEditForm
 
 import mail_server
-
+import itertools
 
 import datetime
 # Create your views here.
 
 MAIL_TEMPLATE = 'work hours: %s. (contain lunch time)'
+EMAIL_SENDER = 'Attendance System<attendance@dsa.com>'
 
 @login_required(login_url="/user/login")
 def mail_index(req):
@@ -35,7 +36,7 @@ def mail_index(req):
         if lines:
             form = EmailEditForm(initial={'username': req.user.username,'umail':lines[0].umail,'mailtemplate':MAIL_TEMPLATE},)
         else:
-            form = EmailEditForm(initial={'username': req.user.username},)
+            form = EmailEditForm(initial={'username': req.user.username,'mailtemplate':MAIL_TEMPLATE},)
     context = {
         'form':form,
         'errors':form.errors
@@ -68,15 +69,14 @@ def task_mail_notice(req):
             if len(show_list) > 1:
                 delta_time = show_list[-1].lock_time - show_list[0].lock_time
                 work_hour = float('%.2f' % (delta_time.total_seconds()/3600))
-                if work_hour < 9.0:
-                    msg_str = umail_obj[0].mail_template % work_hour
-                    mailserver = mail_server.mail_server('127.0.0.1')
-                    msg = mailserver.build_email('test<562867448@qq.com>', umail_obj[0].umail, 'Work Hours', msg_str)
-                    mailserver.send_mail(msg)
+                msg_str = umail_obj[0].mail_template % work_hour
+                mailserver = mail_server.mail_server('127.0.0.1')
+                msg = mailserver.build_email(EMAIL_SENDER, umail_obj[0].umail, 'Work Hours', msg_str)
+                mailserver.send_mail(msg)
             else:
                 msg_str = umail_obj[0].mail_template % 0
                 mailserver = mail_server.mail_server('127.0.0.1')
-                msg = mailserver.build_email('test<562867448@qq.com>', umail_obj[0].umail, 'Work Hours', msg_str)
+                msg = mailserver.build_email(EMAIL_SENDER, umail_obj[0].umail, 'Work Hours', msg_str)
                 mailserver.send_mail(msg)
     return HttpResponseRedirect("/")
 
