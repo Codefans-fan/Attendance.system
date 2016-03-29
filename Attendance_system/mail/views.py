@@ -13,7 +13,7 @@ import itertools
 import datetime
 # Create your views here.
 
-MAIL_TEMPLATE = 'work hours: %s. (contain lunch time)'
+MAIL_TEMPLATE = 'Working hours: %s including your lunch time'
 EMAIL_SENDER = 'Attendance System<attendance@dsa.com>'
 
 @login_required(login_url="/user/login")
