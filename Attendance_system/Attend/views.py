@@ -43,13 +43,13 @@ def show_table_list(req,userid = None):
     return render(req, "Attend/tablelist.html",context=context)
 
 @login_required(login_url="/user/login")
-def show_canlendar(req, userid=None):
+def show_canlendar(req, type=1, id=None):
     start = req.GET.get('start')
     end = req.GET.get('end')
     menu = __createMenu(req.user)
     attends = []
-    if userid and  start and end:
-        attends =  Attend.objects.filter(userId=userid, lock_time__gte = start, lock_time__lt=end).order_by('lock_time')
+    if id and  start and end:
+        attends =  Attend.objects.filter(userId=id, lock_time__gte = start, lock_time__lt=end).order_by('lock_time')
         return  HttpResponse(serializers.serialize('json', __filter_day_record(attends,True)), content_type="application/json")   
         
     context = {
@@ -60,14 +60,14 @@ def show_canlendar(req, userid=None):
 
 
 @login_required(login_url="/user/login")
-def show_chart(req, userid=None):
+def show_chart(req,type=2, id=None):
     day = '2016-03-10'
     # datetime.datetime.strptime(day, '%Y-%m-%d')
     today = datetime.datetime.strptime(day, '%Y-%m-%d')  #datetime.datetime.now().date()
     start = today - timedelta(days=today.weekday())
     end = start + timedelta(days=6)
     
-    attends =  Attend.objects.filter(userId=userid, lock_time__gte = start, lock_time__lt=end).order_by('lock_time')
+    attends =  Attend.objects.filter(userId=id, lock_time__gte = start, lock_time__lt=end).order_by('lock_time')
     
     context = {
         'items':__get_workHours(__filter_day_record(attends, True))
