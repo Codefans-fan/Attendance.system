@@ -48,8 +48,8 @@ def show_canlendar(req, type=1, id=None):
     end = req.GET.get('end')
     menu = __createMenu(req.user)
     attends = []
-    if id and  start and end:
-        attends =  Attend.objects.filter(userId=id, lock_time__gte = start, lock_time__lt=end).order_by('lock_time')
+    if start and end:
+        attends =  Attend.objects.filter(userId=req.user.id, lock_time__gte = start, lock_time__lt=end).order_by('lock_time')
         return  HttpResponse(serializers.serialize('json', __filter_day_record(attends,True)), content_type="application/json")   
         
     context = {
@@ -67,7 +67,7 @@ def show_chart(req,type=2, id=None):
     start = today - timedelta(days=today.weekday())
     end = start + timedelta(days=6)
     
-    attends =  Attend.objects.filter(userId=id, lock_time__gte = start, lock_time__lt=end).order_by('lock_time')
+    attends =  Attend.objects.filter(userId=req.user.id, lock_time__gte = start, lock_time__lt=end).order_by('lock_time')
     
     context = {
         'items':__get_workHours(__filter_day_record(attends, True))
