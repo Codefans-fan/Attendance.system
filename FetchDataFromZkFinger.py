@@ -87,7 +87,7 @@ import psycopg2
 def addUsersToPostgres(userList):
     logger.info('add/update user info to database.')
     try:
-        conn = psycopg2.connect(database="attendance_system", user="openerp", password="dsa", host="172.69.8.25", port="5432")
+        conn = psycopg2.connect(database="xxxx", user="xxx", password="xxx", host="xxxx", port="5432")
         cur = conn.cursor()
         for item in userList:
             logger.info('check user ' + str(item[0]))
@@ -106,12 +106,13 @@ import datetime
 def addAttLogsToPostgres(logList,isToday=None):
     logger.info('add attendance log to database.')
     try:
-        conn = psycopg2.connect(database="attendance_system", user="openerp", password="dsa", host="172.69.8.25", port="5432")
+        conn = psycopg2.connect(database="xxxx", user="xxx", password="xxx", host="xxx", port="5432")
         cur = conn.cursor()
         for item in logList:
             if isToday:
-                now = datetime.datetime.now()
-                today_str = str(now.year)+'-'+str(now.month)+'-'+str(now.day)
+                #now = datetime.datetime.now()
+                #today_str = str(now.year)+'-'+str(now.month)+'-'+str(now.day)
+                today_str = '2016-03-16'
                 if(item[1] > today_str):
                     #cur.execute('''INSERT INTO "Attend_attend"(lock_time,comment,"userId_id") VALUES(%s, %s,%s)''', (item[1],'in',item[0]))
                     cur.execute('''SELECT update_attendancedb(%s, %s)''',(item[0],item[1]))
@@ -123,31 +124,25 @@ def addAttLogsToPostgres(logList,isToday=None):
     except e:
         logger.error(e)
     logger.info('end add attendance log to database.')
-# def RunOneTime():
-#     atts = AttLogsSys('zkemkeeper.ZKEM','172.69.8.4',4370)
-#     atts.connect()
-#     userList = atts.getAllUserInfo()
-#     atts.disConnect()
-#     addUsersToPostgres(userList)
-#     print 'run finish'
 
 if __name__=='__main__':
     # RunOneTime()
-    logger.info('script start.')
-    atts = AttLogsSys('zkemkeeper.ZKEM','172.69.8.4',4370)
-    atts.connect()
-    userinfos = atts.getAllUserInfo()
-    logList = atts.getAllAttLogs()
-    atts.disConnect()
-    addUsersToPostgres(userinfos)
-    addAttLogsToPostgres(logList,True)
-   
+#     logger.info('script start.')
+#     atts = AttLogsSys('zkemkeeper.ZKEM','xxx',4370)
+#     atts.connect()
+#     userinfos = atts.getAllUserInfo()
+#     #logList = atts.getAllAttLogs()
+#     atts.disConnect()
+#     #addUsersToPostgres(userinfos)
+#     #addAttLogsToPostgres(logList,True)
+#     print userinfos
+    
     atts = AttLogsSys('zkemkeeper.ZKEM','172.69.8.5',4370)
     atts.connect()
     logList = atts.getAllAttLogs()
     atts.disConnect()
     addAttLogsToPostgres(logList,True)
-    
+     
     logger.info('script end.')
 
 

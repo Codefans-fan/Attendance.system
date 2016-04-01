@@ -10,7 +10,7 @@ import urllib
 
 
 c = httplib.HTTPSConnection("qyapi.weixin.qq.com")
-c.request("GET", "/cgi-bin/gettoken?corpid=wx416865667552f10b&corpsecret=60gcQRI8S-1hbMSvqf5CzBnYKBk1O3qOTmPw9Lk37Rxm6bFYifoyu4Me-P5sd53G")
+c.request("GET", "/cgi-bin/gettoken?corpid=xxxxxx&corpsecret=xxxxxx")
 response = c.getresponse()
 print response.status, response.reason
 data = response.read()
@@ -25,7 +25,7 @@ params = urllib.urlencode({'touser': '@all','toparty':'@all','totag':'@all','msg
 headers = {"Content-type": "application/x-www-form-urlencoded"
                     , "Accept": "text/plain"}
 str_1 = '''{
-   "touser": "@all",
+   "touser": "fky",
    "msgtype": "text",
    "agentid": 0,
    "text": {
