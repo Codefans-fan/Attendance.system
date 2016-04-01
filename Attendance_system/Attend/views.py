@@ -31,7 +31,7 @@ def show_table_list(req,userid = None):
     elif userid == 'all':
         attends =  Attend.objects.filter()
     else:
-        attends =  Attend.objects.filter(userId=userid).order_by('lock_time')
+        attends =  Attend.objects.filter(userId=userid).order_by('-lock_time')[:1000]
     menu = __createMenu(req.user)
     basemenu = []
     basemenu.append(__createMainMenu())
