@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'Attend.apps.AttendConfig',
     'weichat.apps.WeichatConfig',
     'notice',
-    'mail'
+    'mail',
+    'holiday'
     
 ]
 
@@ -85,11 +86,11 @@ WSGI_APPLICATION = 'Attendance_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'xxxx',
-        'USER': 'xxx',
-        'PASSWORD': 'xxxx',
-        'HOST': 'xxxx',
-        'PORT': 'xxxx',
+        'NAME': 'attendance_system',
+        'USER': 'xx',
+        'PASSWORD': 'xx',
+        'HOST': 'xxx',
+        'PORT': 'xxx',
     }
 }
 
