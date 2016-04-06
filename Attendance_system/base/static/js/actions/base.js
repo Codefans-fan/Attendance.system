@@ -31,7 +31,7 @@ function show_charts(){
 	var src = $("#attend_viewer").attr("src");
 	var patt=new RegExp("id=(.+)");
 	var uid =patt.exec(src);
-	if(uid != null){
+	if(!isNaN(uid[1])){
 		$("#attend_viewer").attr("src","type=2&"+uid[0]);
 	}
 }
