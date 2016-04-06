@@ -10,12 +10,14 @@ from django.contrib.auth.models import User
 
 from base.models import Menu
 from base.models import BaseManu
+from holiday.models import holiday_cn
 
 import itertools
 import json
 import datetime
 from datetime import timedelta
 import types
+from itertools import chain
 @login_required(login_url="/user/login")
 def index(req):
     menu = __createMenu(req.user)
@@ -50,8 +52,10 @@ def show_canlendar(req, type=1, id=None):
     attends = []
     if start and end:
         attends =  Attend.objects.filter(userId=req.user.id, lock_time__gte = start, lock_time__lt=end).order_by('lock_time')
-        return  HttpResponse(serializers.serialize('json', __filter_day_record(attends,True)), content_type="application/json")   
-        
+        holiday = holiday_cn.objects.filter(day__gte=start,day__lt=end)
+        v_attends = __filter_day_record(attends,True)
+        res = chain(holiday,v_attends)
+        return  HttpResponse(serializers.serialize('json', res ), content_type="application/json")   
     context = {
         'menu':menu,
         'lines':__filter_day_record(attends,True),
@@ -91,11 +95,11 @@ def __filter_day_record(records,addHours=False):
                 res.append(grp[0])
                 res.append(grp[-1])
                 if addHours:
-                   timedalta =  grp[-1].lock_time - grp[0].lock_time
-                   work_hours = float('%.1f'% (timedalta.total_seconds() / 3600))
-                   if not grp[-1].comment.isdigit():
-                       grp[-1].comment  = work_hours
-                       grp[-1].save()
+                    timedalta =  grp[-1].lock_time - grp[0].lock_time
+                    work_hours = float('%.1f'% (timedalta.total_seconds() / 3600))
+                    if not grp[-1].comment.isdigit():
+                        grp[-1].comment  = work_hours
+                        grp[-1].save()
             else:
                 res.append(grp[0])
         return res
