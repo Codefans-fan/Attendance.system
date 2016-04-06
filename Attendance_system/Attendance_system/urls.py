@@ -36,6 +36,7 @@ from notice.views import notice_index
 
 from mail.views import mail_index
 from mail.views import task_mail_notice
+from holiday.views import syc_holiday_from_baidu
 urlpatterns = [
     url(r'^$', index),
     #admin    
@@ -67,6 +68,8 @@ urlpatterns = [
 
     #mail
     url(r'^email/$',mail_index),
-    url(r'^email/task_mail_notice',task_mail_notice)
+    url(r'^email/task_mail_notice',task_mail_notice),
 
+    #holiday
+     url(r'^holiday/syc_holiday_from_baidu',syc_holiday_from_baidu),
 ]
