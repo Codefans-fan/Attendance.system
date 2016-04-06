@@ -18,7 +18,6 @@ def syc_holiday_from_baidu(req):
         query_date = req.GET.get('str_date','')
     else:
         query_date = datetime.datetime.now().strftime('%Y-%m')
-    print query_date
     data = {'query':query_date,'resource_id':'6018','ie':'utf8','oe':'gbk','cb':'op_aladdin_callback','co':'','format':'json','tn':'baidu','cb':'jQuery1102018497919710353017_'+str(timestamp),'t':str(timestamp),'_':str(timestamp)}
     url = 'https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?'
     for key,val in data.items():
