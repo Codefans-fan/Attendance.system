@@ -67,11 +67,19 @@ $(document).ready(function() {
 		        	success:function(data){
 		        		var events = [];
 		        		$.each(data,function(i,item){
-		        		 	var event = {
+		        			if(item.model != 'Attend.attend'){
+		        				var event = {
+		        		 			title:item.fields.holiday_name,
+		        		 			start:item.fields.day,
+		        		 			backgroundColor: '#be2127'
+		        		 		};
+		        			}else{
+		        				var event = {
 		        		 			title:comment_formate(item.fields.comment),
 		        		 			start:item.fields.lock_time,
 		        		 			backgroundColor: get_color(item.fields.comment)
 		        		 		};
+		        			}
 		        		 	events.push(event);
 		        		});
 		        		$('#calendar').fullCalendar('removeEvents');
