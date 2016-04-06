@@ -71,5 +71,5 @@ urlpatterns = [
     url(r'^email/task_mail_notice',task_mail_notice),
 
     #holiday
-     url(r'^holiday/syc_holiday_from_baidu',syc_holiday_from_baidu),
+    url(r'^holiday/syc_holiday_from_baidu',syc_holiday_from_baidu),
 ]
