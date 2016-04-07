@@ -7,49 +7,52 @@
 </div>
  <script>
  $(function () {
-    function toString(){
+    function getData(){
        arr = [];
     	 {% for item in items %}
-    	   arr.push( {{item}});
+    	   console.log({{item}});
+    	   arr.push( {{item}} );
 		 {% endfor %}
-		
+	  console.log(arr);
 	  return arr;
     };
     $('#container').highcharts({
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Weekly Chart',
-            x: -20 //center
+        title:{
+			text:'Work VS Time'        
         },
         subtitle: {
-            text: 'source:attendance logs',
-            x: -20
+            text: 'work hard'
         },
         xAxis: {
-            categories: ['Mon', 'Tue', 'Wen', 'Thu', 'Fri', 'Sat','Sun']
+            gridLineWidth: 1,
+            title: {
+                enabled: true,
+                text: 'Time (o)'
+            },
+            startOnTick: true,
+            endOnTick: true,
+            showLastLabel: true
         },
         yAxis: {
-            min:0,
             title: {
-                text: 'Hours'
-            },
-            maxPadding:1
-        },
-        tooltip: {
-            valueSuffix: 'h'
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
+                text: 'Hours (h)'
             }
         },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
         series: [{
-            name: "{{ user}}",
-            data: toString()
-        }]
+            name: "p",
+            type: 'scatter',
+            color:Highcharts.getOptions().colors[1],
+            data: getData(),
+            }],
+        tooltip: {
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: '{point.x} o, {point.y} h'
+        }
     });
 });
 				
