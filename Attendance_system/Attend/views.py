@@ -65,25 +65,25 @@ def show_canlendar(req, type=1, id=None):
 
 @login_required(login_url="/user/login")
 def show_chart(req,type=2, id=None):
-    day = '2016-03-10'
+    day = '2016-01-05'
     # datetime.datetime.strptime(day, '%Y-%m-%d')
     today = datetime.datetime.strptime(day, '%Y-%m-%d')  #datetime.datetime.now().date()
-    start = today - timedelta(days=today.weekday())
-    end = start + timedelta(days=6)
+    end = datetime.datetime.strptime('2016-04-05', '%Y-%m-%d')
     
-    attends =  Attend.objects.filter(userId=req.user.id, lock_time__gte = start, lock_time__lt=end).order_by('lock_time')
+    attends =  Attend.objects.filter(lock_time__gte = today, lock_time__lt=end).order_by('lock_time')
     
     context = {
-        'items':__get_workHours(__filter_day_record(attends, True))
+        'items':__get_workHours(attends)
     }
     return render(req,"Attend/chart.html",context = context)
 
 
 def __get_workHours(records):
     items = []
+    print records[5].comment
     for line in records:
-        if type(line.comment) == types.FloatType or type(line.comment) == types.IntType:
-            items.append(line.comment)
+        if line.comment.isdigit():
+            items.append([float(line.lock_time.strftime('%H.%M')),float(line.comment)])
     return items
 def __filter_day_record(records,addHours=False):
     if records:
@@ -91,12 +91,14 @@ def __filter_day_record(records,addHours=False):
         days_group =[list(group) for k, group in itertools.groupby(records,key=lambda args: args.lock_time.day)]
         for grp in days_group:
             grp.sort(key=lambda p: p.lock_time)
+            for i in grp:
+                print i.userId, i.lock_time
             if len(grp) > 1:
                 res.append(grp[0])
                 res.append(grp[-1])
                 if addHours:
                     timedalta =  grp[-1].lock_time - grp[0].lock_time
-                    work_hours = float('%.1f'% (timedalta.total_seconds() / 3600))
+                    work_hours = float('%.2f'% (timedalta.total_seconds() / 3600))
                     if not grp[-1].comment.isdigit():
                         grp[-1].comment  = work_hours
                         grp[-1].save()
@@ -122,11 +124,12 @@ def __createMainMenu():
 
 def clean_attend_database(req):
     users = User.objects.all()
+    day = datetime.datetime.now().strftime('%Y-%m-%d')
+    today = datetime.datetime.strptime(day, '%Y-%m-%d') 
     for user in users:
-        attends =  Attend.objects.filter(userId=user.id).order_by('lock_time')
+        attends =  Attend.objects.filter(userId=user.id,lock_time__gte = today).order_by('lock_time')
         show_list = __filter_day_record(attends)
         for item in attends:
             if item not in show_list:
                 item.delete()
     return HttpResponseRedirect("/")
-
