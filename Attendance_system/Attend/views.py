@@ -88,11 +88,9 @@ def __get_workHours(records):
 def __filter_day_record(records,addHours=False):
     if records:
         res = []
-        days_group =[list(group) for k, group in itertools.groupby(records,key=lambda args: args.lock_time.day)]
+        days_group =[list(group) for k, group in itertools.groupby(records,key=lambda args: args.lock_time.strftime('%Y-%m-%d'))]
         for grp in days_group:
             grp.sort(key=lambda p: p.lock_time)
-            for i in grp:
-                print i.userId, i.lock_time
             if len(grp) > 1:
                 res.append(grp[0])
                 res.append(grp[-1])
