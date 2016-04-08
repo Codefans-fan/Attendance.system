@@ -62,13 +62,10 @@ def show_canlendar(req, type=1, id=None):
 
 @login_required(login_url="/user/login")
 def show_chart(req,type=2, id=None):
-    day = '2016-01-05'
     # datetime.datetime.strptime(day, '%Y-%m-%d')
-    today = datetime.datetime.strptime(day, '%Y-%m-%d')  #datetime.datetime.now().date()
-    end = datetime.datetime.strptime('2016-04-05', '%Y-%m-%d')
-    
-    attends =  Attend.objects.filter(lock_time__gte = today, lock_time__lt=end).order_by('lock_time')
-    
+    today = datetime.datetime.today().replace(hour=0, minute=0, second=0)
+    yesterday = today -datetime.timedelta(days=1)
+    attends =  Attend.objects.filter(lock_time__gte = yesterday, lock_time__lt=today).order_by('lock_time')
     context = {
         'items':attendance_utils.get_workHours(attends)
     }
@@ -90,8 +87,7 @@ def __createMainMenu():
 
 def clean_attend_database(req):
     users = User.objects.all()
-    day = datetime.datetime.now().strftime('%Y-%m-%d')
-    today = datetime.datetime.strptime(day, '%Y-%m-%d') 
+    today = datetime.datetime.today().replace(hour=0, minute=0, second=0)
     for user in users:
         attends =  Attend.objects.filter(userId=user.id,lock_time__gte = today).order_by('lock_time')
         show_list = attendance_utils.filter_day_record(attends,True)

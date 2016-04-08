@@ -7,7 +7,8 @@ Created on Apr 7, 2016
 
 import datetime
 import itertools
-
+import time
+import numbers
 use_date = ['2015-09-05 08:00:00',
             '2015-10-05',
             '2015-11-05',
@@ -24,3 +25,11 @@ test = [list(group) for k, group in itertools.groupby(date_objs,key=lambda args:
 
 for i in  test:
     print i
+
+print (datetime.datetime.today() -datetime.timedelta(days=1)).replace(hour=0, minute=0, second=0)
+
+def _isnumeric(s):
+    '''returns True if string s is numeric'''
+    return all(c in "0123456789.+-" for c in s)
+
+print _isnumeric('152ds.5')
