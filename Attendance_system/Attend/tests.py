@@ -132,13 +132,15 @@ def addAttLogsToPostgres(logList,isToday=None):
 #     print 'run finish'
 
 if __name__=='__main__':
-    day = '2016-03-15'
-    dt = datetime.datetime.now().date()    # datetime.datetime.strptime(day, '%Y-%m-%d')
-    print dt.weekday()
-    start = dt - timedelta(days=dt.weekday())
-    end = start + timedelta(days=6)
-    print start
-    print end
+#     day = '2016-03-15'
+#     dt = datetime.datetime.now().date()    # datetime.datetime.strptime(day, '%Y-%m-%d')
+#     print dt.weekday()
+#     start = dt - timedelta(days=dt.weekday())
+#     end = start + timedelta(days=6)
+#     print start
+#     print end
+
+    print datetime.datetime.now().strftime('%H.%M')
 
 
     

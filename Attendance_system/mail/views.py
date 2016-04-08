@@ -8,8 +8,7 @@ from Attend.models import Attend
 from models import EmailEditForm
 
 import mail_server
-import itertools
-
+from base import attendance_utils
 import datetime
 # Create your views here.
 
@@ -44,28 +43,13 @@ def mail_index(req):
     return render(req, 'mail/mail_index.html',context=context)
 
 
-def __filter_day_record(records):
-    if records:
-        res = []
-        days_group =[list(group) for k, group in itertools.groupby(records,key=lambda args: args.lock_time.day)]
-        for grp in days_group:
-            grp.sort(key=lambda p: p.lock_time)
-            if len(grp) > 1:
-                res.append(grp[0])
-                res.append(grp[-1])
-            else:
-                res.append(grp[0])
-        return res
-    return []
-    
-
 def task_mail_notice(req):
     users = User.objects.all()
     for user in users:
         umail_obj = mailconfig.objects.filter(userid=user.id)
         if umail_obj:
             attends =  Attend.objects.filter(userId=user.id,lock_time__gte = datetime.datetime.today().strftime("%Y-%m-%d")).order_by('lock_time')
-            show_list = __filter_day_record(attends)
+            show_list = attendance_utils.filter_day_record(attends)
             if len(show_list) > 1:
                 delta_time = show_list[-1].lock_time - show_list[0].lock_time
                 work_hour = float('%.2f' % (delta_time.total_seconds()/3600))

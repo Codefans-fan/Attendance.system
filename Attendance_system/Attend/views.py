@@ -12,12 +12,9 @@ from base.models import Menu
 from base.models import BaseManu
 from holiday.models import holiday_cn
 
-import itertools
-import json
 import datetime
-from datetime import timedelta
-import types
 from itertools import chain
+from base import attendance_utils
 @login_required(login_url="/user/login")
 def index(req):
     menu = __createMenu(req.user)
@@ -53,12 +50,12 @@ def show_canlendar(req, type=1, id=None):
     if start and end:
         attends =  Attend.objects.filter(userId=req.user.id, lock_time__gte = start, lock_time__lt=end).order_by('lock_time')
         holiday = holiday_cn.objects.filter(day__gte=start,day__lt=end)
-        v_attends = __filter_day_record(attends,True)
+        v_attends = attendance_utils.filter_day_record(attends,True)
         res = chain(holiday,v_attends)
         return  HttpResponse(serializers.serialize('json', res ), content_type="application/json")   
     context = {
         'menu':menu,
-        'lines':__filter_day_record(attends,True),
+        'lines':attendance_utils.filter_day_record(attends,True),
         }
     return render(req,"Attend/calendarpage.html",context=context)
 
@@ -73,38 +70,9 @@ def show_chart(req,type=2, id=None):
     attends =  Attend.objects.filter(lock_time__gte = today, lock_time__lt=end).order_by('lock_time')
     
     context = {
-        'items':__get_workHours(attends)
+        'items':attendance_utils.get_workHours(attends)
     }
     return render(req,"Attend/chart.html",context = context)
-
-
-def __get_workHours(records):
-    items = []
-    print records[5].comment
-    for line in records:
-        if line.comment.isdigit():
-            items.append([float(line.lock_time.strftime('%H.%M')),float(line.comment)])
-    return items
-def __filter_day_record(records,addHours=False):
-    if records:
-        res = []
-        days_group =[list(group) for k, group in itertools.groupby(records,key=lambda args: args.lock_time.strftime('%Y-%m-%d'))]
-        for grp in days_group:
-            grp.sort(key=lambda p: p.lock_time)
-            if len(grp) > 1:
-                res.append(grp[0])
-                res.append(grp[-1])
-                if addHours:
-                    timedalta =  grp[-1].lock_time - grp[0].lock_time
-                    work_hours = float('%.2f'% (timedalta.total_seconds() / 3600))
-                    if not grp[-1].comment.isdigit():
-                        grp[-1].comment  = work_hours
-                        grp[-1].save()
-            else:
-                res.append(grp[0])
-        return res
-    return []
-    
 
 def __createMenu(user):
     menu_1 = Menu('Attend')
@@ -126,7 +94,7 @@ def clean_attend_database(req):
     today = datetime.datetime.strptime(day, '%Y-%m-%d') 
     for user in users:
         attends =  Attend.objects.filter(userId=user.id,lock_time__gte = today).order_by('lock_time')
-        show_list = __filter_day_record(attends)
+        show_list = attendance_utils.filter_day_record(attends)
         for item in attends:
             if item not in show_list:
                 item.delete()
