@@ -94,7 +94,7 @@ def clean_attend_database(req):
     today = datetime.datetime.strptime(day, '%Y-%m-%d') 
     for user in users:
         attends =  Attend.objects.filter(userId=user.id,lock_time__gte = today).order_by('lock_time')
-        show_list = attendance_utils.filter_day_record(attends)
+        show_list = attendance_utils.filter_day_record(attends,True)
         for item in attends:
             if item not in show_list:
                 item.delete()
