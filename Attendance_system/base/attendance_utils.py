@@ -7,6 +7,10 @@ Created on Apr 8, 2016
 
 import itertools
 
+def _isnumeric(s):
+    '''returns True if string s is numeric'''
+    return all(c in "0123456789.+-" for c in s)
+
 
 def filter_day_record(records,addHours=False):
     if records:
@@ -31,6 +35,8 @@ def filter_day_record(records,addHours=False):
 def get_workHours(records):
     items = []
     for line in records:
-        if line.comment.isdigit():
+        if _isnumeric(line.comment):
             items.append([float(line.lock_time.strftime('%H.%M')),float(line.comment)])
     return items
+
+
