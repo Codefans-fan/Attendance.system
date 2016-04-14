@@ -87,7 +87,11 @@ def __createMainMenu():
 
 def clean_attend_database(req):
     users = User.objects.all()
-    today = datetime.datetime.today().replace(hour=0, minute=0, second=0)
+    start_date =  req.GET.get('start_date',False)
+    if start_date:
+        today = datetime.datetime.strptime(start_date,'%Y-%m-%d')
+    else:
+        today = datetime.datetime.today().replace(hour=0, minute=0, second=0)
     for user in users:
         attends =  Attend.objects.filter(userId=user.id,lock_time__gte = today).order_by('lock_time')
         show_list = attendance_utils.filter_day_record(attends,True)
